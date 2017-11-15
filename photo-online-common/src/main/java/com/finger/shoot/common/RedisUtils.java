@@ -1,3 +1,9 @@
+/*
+ * Powered By [finger-framework]
+ * Web Site: http://www.fingercrm.cn/
+ * Since 2017 - 2017
+ */
+
 package com.finger.shoot.common;
 
 import org.springframework.dao.DataAccessException;
@@ -7,16 +13,17 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.SerializationUtils;
 
 import javax.annotation.Resource;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+
 /**
- * Created by zb 2017/6/6.  redis工具类
+ * redis工具类
+ *
+ * @author zb
+ * @version 1.0
+ * @since 1.0
  */
 @Component
 public class RedisUtils<T> {
@@ -41,55 +48,12 @@ public class RedisUtils<T> {
                 new RedisCallback<Boolean>() {
                     public Boolean doInRedis(RedisConnection connection) throws DataAccessException {
                         connection.setEx(
-                                serializable(key),
+                                SerializationUtils.serialize(key),
                                 (null == liveTime || 0l == liveTime ? defaultLiveTime : liveTime),
-                                serializable(value));
+                                SerializationUtils.serialize(value));
                         return true;
                     }
                 });
-    }
-
-    /**
-     * 序列化处理
-     * @param obj
-     * @return
-     */
-    public static byte[] serializable(Object obj) {
-        if (obj == null) {
-            return null;
-        }
-        ObjectOutputStream oos = null;
-        ByteArrayOutputStream baos = null;
-        try {
-            // 序列化
-            baos = new ByteArrayOutputStream();
-            oos = new ObjectOutputStream(baos);
-            oos.writeObject(obj);
-            byte[] bytes = baos.toByteArray();
-            return bytes;
-        } catch (Exception e) {
-        }
-        return null;
-    }
-
-    /**
-     * 反序列化处理
-     * @param bytes
-     * @return
-     */
-    public static Object unserialize(byte[] bytes) {
-        if (bytes == null) {
-            return null;
-        }
-        ByteArrayInputStream bais = null;
-        try {
-            // 反序列化
-            bais = new ByteArrayInputStream(bytes);
-            ObjectInputStream ois = new ObjectInputStream(bais);
-            return ois.readObject();
-        } catch (Exception e) {
-        }
-        return null;
     }
 
     /**
@@ -102,7 +66,7 @@ public class RedisUtils<T> {
         return redisTemplate.execute(
                 new RedisCallback<Object>() {
                     public Object doInRedis(RedisConnection connection) throws DataAccessException {
-                        return unserialize(connection.get(serializable( key )));
+                        return SerializationUtils.deserialize(connection.get(SerializationUtils.serialize( key )));
                     }
                 }
         );

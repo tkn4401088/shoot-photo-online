@@ -1,25 +1,42 @@
+/*
+ * Powered By [finger-framework]
+ * Web Site: http://www.fingercrm.cn/
+ * Since 2017 - 2017
+ */
+
 package com.finger.shoot.common;
 
 import com.alibaba.fastjson.JSON;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.StringUtils;
+import org.springframework.util.concurrent.ListenableFuture;
+import org.springframework.web.client.AsyncRestTemplate;
 import org.springframework.web.client.RestTemplate;
+
 
 import java.util.Map;
 
 /**
- * Created by zb on 2017/6/7.
+ * http请求工具类
+ *
+ * @author zb
+ * @version 1.0
+ * @since 1.0
  */
+@Slf4j
 @Component
 public class RestTemplateUtils {
 
     @Autowired
     private RestTemplate restTemplate;
+    
 
     /**
      * Http GET请求Url里带参数的请求
@@ -43,6 +60,8 @@ public class RestTemplateUtils {
      * @return
      */
     public <T> T httpGetUrlVariable(String url, Class<T> respType, Map<String, Object> urlVariableMap){
+        log.info("Http Post请求   MediaType  get  \r\nUrl={}  \r\nparam={}", new String[]{url, JSON.toJSONString(urlVariableMap)});
+
         String urlParams = "";
 
         if(urlVariableMap!=null && urlVariableMap.size()>0){
@@ -53,7 +72,9 @@ public class RestTemplateUtils {
             }
         }
 
-        return restTemplate.getForObject(url + "?" + urlParams, respType, urlVariableMap);
+        T result = restTemplate.getForObject(url + "?" + urlParams, respType, urlVariableMap);
+        log.info("Http Post请求   MediaType  get  \r\nUrl={}  \r\nparam={} \r\nresult={}", new String[]{url + "?" + urlParams, JSON.toJSONString(urlVariableMap), JSON.toJSONString(result)});
+        return result;
     }
 
     /**
@@ -65,14 +86,18 @@ public class RestTemplateUtils {
      * @return
      */
     public <T> T httpPostMediaTypeJson(String url, Class<T> respType, Object obj){
+        log.info("Http Post请求   MediaType  application/json  \n\rUrl={}  \r\nparam={}", new String[]{url, JSON.toJSONString(obj)});
+
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
         headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);
 
         HttpEntity<String> formEntity = new HttpEntity<String>(JSON.toJSONString(obj), headers);
-        return restTemplate.postForObject(url, formEntity, respType);
+        T result = restTemplate.postForObject(url, formEntity, respType);
+        log.info("Http Post请求   MediaType  application/json  \r\nUrl={}  \r\nparam={} \r\nresult={}", new String[]{url, JSON.toJSONString(obj), JSON.toJSONString(result)});
+        return result;
     }
-
+    
 
     /**
      * Http Post请求   MediaType  application/x-www-form-urlencoded
@@ -83,6 +108,8 @@ public class RestTemplateUtils {
      * @return
      */
     public <T> T httpPostMediaTypeFromData(String url, Class<T> respType, Map<String, ?> obj){
+        log.info("Http Post请求   MediaType  application/json  \r\n Url={}   \r\nparam={}", new String[]{url, JSON.toJSONString(obj)});
+
         LinkedMultiValueMap multMap = new LinkedMultiValueMap();
         if(obj!=null && obj.size()>0){
             for(String m : obj.keySet()){
@@ -95,6 +122,8 @@ public class RestTemplateUtils {
         headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);
         HttpEntity<LinkedMultiValueMap> req = new HttpEntity<LinkedMultiValueMap>(multMap, headers);
 
-        return restTemplate.postForObject(url, req ,respType);
+        T result = restTemplate.postForObject(url, req, respType);
+        log.info("Http Post请求   MediaType  application/x-www-form-urlencoded  \r\nUrl={}  \r\nparam={} \r\nresult={}", new String[]{url, JSON.toJSONString(obj), JSON.toJSONString(result)});
+        return result;
     }
 }

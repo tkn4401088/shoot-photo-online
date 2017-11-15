@@ -1,8 +1,9 @@
 /*
- * Powered By [dchy-framework]
- * Web Site: http://www.fingercrm.cn
- * Since 2006 - 2016
+ * Powered By [finger-framework]
+ * Web Site: http://www.fingercrm.cn/
+ * Since 2017 - 2017
  */
+
 
 package com.finger.shoot.common;
 
@@ -28,9 +29,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
+
 /**
- * mybatis拦截器  配置分页   以selectPage开头的走分页
- * 
+ * mybatis拦截器  配置分页  以selectPage开头的进拦截器
+ *
  * @author zb
  * @version 1.0
  * @since 1.0
