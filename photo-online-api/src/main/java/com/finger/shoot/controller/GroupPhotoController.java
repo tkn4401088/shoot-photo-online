@@ -9,9 +9,9 @@ package com.finger.shoot.controller;
 
 import com.finger.portal.base.util.ResponseModel;
 
-import com.finger.shoot.entity.PhotoOnlineForward;
+import com.finger.shoot.entity.GroupPhoto;
 import com.finger.shoot.exception.ParamsCheckFailException;
-import com.finger.shoot.service.PhotoOnlineForwardService;
+import com.finger.shoot.service.GroupPhotoService;
 import com.finger.shoot.utils.ValidatedUtil;
 import com.finger.shoot.utils.ExceptionPrintUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +22,7 @@ import java.util.List;
 
 
 /**
- * 照片直播转发记录表控制类
+ * 团照片信息表控制类
  * 
  * @author pmd
  * @version 1.0
@@ -30,24 +30,27 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-@RequestMapping("/photoOnlineForward")
-public class PhotoOnlineForwardController {
+@RequestMapping("/groupPhoto")
+public class GroupPhotoController {
 
     @Autowired
-    private PhotoOnlineForwardService photoOnlineForwardService;
+    private GroupPhotoService groupPhotoService;
 
-
-    //@ApiOperation(value="根据条件查询列表", notes="根据条件查询列表", response = ResponseModel.class)
-    //@ApiImplicitParam(name = "photoOnlineForward", value = "查询条件-photoOnlineForward对象", required = false, dataType = "PhotoOnlineForward")
-    @RequestMapping(value = "/selectPhotoOnlineForwards", method = RequestMethod.POST)
-    public Object selectPhotoOnlineForwards(@RequestBody PhotoOnlineForward photoOnlineForward, BindingResult result){
+    /**
+     * 查询团下面的照片
+     * @param groupPhoto
+     * @param result
+     * @return
+     */
+    @RequestMapping(value = "/selectGroupPhotos", method = RequestMethod.POST)
+    public Object selectGroupPhotos(@RequestBody GroupPhoto groupPhoto, BindingResult result){
         ResponseModel susResp = ResponseModel.getSuccessResponseModel();
         try {
             //校验参数
             ValidatedUtil.validatedParams(result);
 
-            List<PhotoOnlineForward> photoOnlineForwards = photoOnlineForwardService.selectPhotoOnlineForwards(photoOnlineForward);
-            susResp.setData(photoOnlineForwards);
+            List<GroupPhoto> groupPhotos = groupPhotoService.selectGroupPhotos(groupPhoto);
+            susResp.setData(groupPhotos);
         }catch (ParamsCheckFailException e){
             log.error(ExceptionPrintUtil.getMessage(e));
             e.printStackTrace();

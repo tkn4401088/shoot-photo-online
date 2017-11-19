@@ -9,11 +9,16 @@ package com.finger.shoot.controller;
 
 import com.finger.portal.base.util.ResponseModel;
 
+import com.finger.shoot.common.Constants;
 import com.finger.shoot.entity.PhotoOnlineCustom;
 import com.finger.shoot.exception.ParamsCheckFailException;
 import com.finger.shoot.service.PhotoOnlineCustomService;
+import com.finger.shoot.utils.BeanUtil;
 import com.finger.shoot.utils.ValidatedUtil;
 import com.finger.shoot.utils.ExceptionPrintUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -37,17 +42,56 @@ public class PhotoOnlineCustomController {
     private PhotoOnlineCustomService photoOnlineCustomService;
 
 
-   // @ApiOperation(value="根据条件查询列表", notes="根据条件查询列表", response = ResponseModel.class)
-    //@ApiImplicitParam(name = "photoOnlineCustom", value = "查询条件-photoOnlineCustom对象", required = false, dataType = "PhotoOnlineCustom")
-    @RequestMapping(value = "/selectPhotoOnlineCustoms", method = RequestMethod.POST)
-    public Object selectPhotoOnlineCustoms(@RequestBody PhotoOnlineCustom photoOnlineCustom, BindingResult result){
+    /**
+     * 根据ID查询拼图|小视频
+     * @param photoOnlineCustom
+     * @param result
+     * @return
+     */
+    @RequestMapping(value = "/selectPhotoOnlineCustomById", method = RequestMethod.POST)
+    public Object selectPhotoOnlineCustomById(@RequestBody PhotoOnlineCustom photoOnlineCustom, BindingResult result){
         ResponseModel susResp = ResponseModel.getSuccessResponseModel();
         try {
             //校验参数
             ValidatedUtil.validatedParams(result);
 
-            List<PhotoOnlineCustom> photoOnlineCustoms = photoOnlineCustomService.selectPhotoOnlineCustoms(photoOnlineCustom);
-            susResp.setData(photoOnlineCustoms);
+            photoOnlineCustom = photoOnlineCustomService.selectById(photoOnlineCustom.getId());
+            if(null != photoOnlineCustom) {
+                susResp.setData(BeanUtil.getProperties(photoOnlineCustom,
+                        new String[]{"id", "worksType", "url", "filesize", "accessNums","orderId"},
+                        false));
+            }
+        }catch (ParamsCheckFailException e){
+            log.error(ExceptionPrintUtil.getMessage(e));
+            e.printStackTrace();
+            susResp = new ResponseModel(e.getCode(), e.getMsg());
+        }catch (Exception e){
+            susResp = ResponseModel.getFailedResponseModel().setData(e.getMessage());
+            log.error(ExceptionPrintUtil.getMessage(e));
+            e.printStackTrace();
+        }
+        return susResp;
+    }
+
+
+
+    /**
+     * 保存拼图|小视频
+     * @param photoOnlineCustom
+     * @param result
+     * @return
+     */
+    @RequestMapping(value = "/savePhotoOnlineCustom", method = RequestMethod.POST)
+    public Object savePhotoOnlineCustom(@RequestBody PhotoOnlineCustom photoOnlineCustom, BindingResult result){
+        ResponseModel susResp = ResponseModel.getSuccessResponseModel();
+        try {
+            //校验参数
+            ValidatedUtil.validatedParams(result);
+
+            int flag = photoOnlineCustomService.insert(photoOnlineCustom);
+            if(flag <=0) {
+                susResp = new ResponseModel(Constants.ERR_CODE_500, Constants.ERR_MSG_MAP.get(Constants.ERR_CODE_500));
+            }
         }catch (ParamsCheckFailException e){
             log.error(ExceptionPrintUtil.getMessage(e));
             e.printStackTrace();

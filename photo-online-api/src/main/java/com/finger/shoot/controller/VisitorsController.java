@@ -15,8 +15,12 @@ import com.finger.shoot.service.VisitorsService;
 import com.finger.shoot.utils.ValidatedUtil;
 import com.finger.shoot.utils.ExceptionPrintUtil;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -31,6 +35,7 @@ import java.util.List;
  */
 @Slf4j
 @RestController
+@Api("游客管理")
 @RequestMapping("/visitors")
 public class VisitorsController {
 
@@ -38,9 +43,9 @@ public class VisitorsController {
     private VisitorsService visitorsService;
 
 
-    //@ApiOperation(value="根据条件查询列表", notes="根据条件查询列表", response = ResponseModel.class)
-    //@ApiImplicitParam(name = "visitors", value = "查询条件-visitors对象", required = false, dataType = "Visitors")
-    @RequestMapping(value = "/selectVisitorss", method = RequestMethod.POST)
+    @ApiOperation(value="查询游客列表", notes="根据条件查询列表")
+    @ApiImplicitParam(name = "visitors", value = "游客实体对象", required = false, dataType = "Visitors")
+    @RequestMapping(value = "/selectVisitors", method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Object selectVisitorss(@RequestBody Visitors visitors, BindingResult result){
         ResponseModel susResp = ResponseModel.getSuccessResponseModel();
         try {
