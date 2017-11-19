@@ -38,30 +38,7 @@ public class PhotoOnlineCustomServiceImpl implements PhotoOnlineCustomService {
         return photoOnlineCustomMapper.insert(photoOnlineCustom);
     }
 
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class, isolation = Isolation.READ_COMMITTED)
-    public int batchInsert(List<PhotoOnlineCustom> photoOnlineCustoms){
-        return photoOnlineCustomMapper.batchInsert(photoOnlineCustoms);
-    }
-
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class, isolation = Isolation.READ_COMMITTED)
-    public int deleteById(Long id){
-        return photoOnlineCustomMapper.deleteById(id);
-    }
-
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class, isolation = Isolation.READ_COMMITTED)
-    public int updateById(PhotoOnlineCustom photoOnlineCustom){
-        return photoOnlineCustomMapper.updateById(photoOnlineCustom);
-    }
-
-    public List<PhotoOnlineCustom> selectPhotoOnlineCustoms(PhotoOnlineCustom photoOnlineCustom){
-        return photoOnlineCustomMapper.selectPhotoOnlineCustoms(photoOnlineCustom);
-    }
-
     public PhotoOnlineCustom selectById(Long id){
         return photoOnlineCustomMapper.selectById(id);
-    }
-
-    public List<PhotoOnlineCustom> selectPagePhotoOnlineCustoms(PhotoOnlineCustom photoOnlineCustom){
-        return photoOnlineCustomMapper.selectPagePhotoOnlineCustoms(photoOnlineCustom);
     }
 }

@@ -26,26 +26,6 @@ public interface PhotoOnlineCustomService {
 	 */
 	int insert(PhotoOnlineCustom photoOnlineCustom);
 
-	/**
-	 * 批量新增
-	 * @param photoOnlineCustoms
-	 * @return
-	 */
-	int batchInsert(List<PhotoOnlineCustom> photoOnlineCustoms);
-
-	/**
-	 * 根据ID来删除数据
-	 * @param id
-	 * @return
-	 */
-	int deleteById(Long id);
-
-	/**
-	 * 根据ID来更新数据
-	 * @param photoOnlineCustom
-	 * @return
-	 */
-	int updateById(PhotoOnlineCustom photoOnlineCustom);
 
 	/**
 	 * 根据ID来查询数据
@@ -53,19 +33,5 @@ public interface PhotoOnlineCustomService {
 	 * @return
 	 */
 	PhotoOnlineCustom selectById(Long id);
-
-	/**
-	 * 根据条件来查询List
-	 * @param photoOnlineCustom
-	 * @return
-	 */
-	List<PhotoOnlineCustom> selectPhotoOnlineCustoms(PhotoOnlineCustom photoOnlineCustom);
-
-	/**
-	 * 分页查询
-	 * @param photoOnlineCustom
-	 * @return
-	 */
-	List<PhotoOnlineCustom> selectPagePhotoOnlineCustoms(PhotoOnlineCustom photoOnlineCustom);
 }
 
