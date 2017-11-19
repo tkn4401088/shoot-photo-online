@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.finger.shoot.mapper.StaticDataMapper" >
+
+  <resultMap id="StaticDataResultMap" type="com.finger.shoot.entity.StaticData" >
+      <result column="data_name" property="dataName"/>
+      <result column="data_type" property="dataType"/>
+      <result column="data_value" property="dataValue"/>
+  </resultMap>
+
+  <sql id="staticData_columns">
+      data_name,data_value,data_type
+  </sql>
+
+  <select id="selectStaticDataByType" resultMap="StaticDataResultMap" parameterType="com.finger.shoot.entity.StaticData" >
+    select
+     <include refid="staticData_columns" />
+    from t_static_data
+    where data_type=#{dataName} and status =1
+  </select>
+</mapper>

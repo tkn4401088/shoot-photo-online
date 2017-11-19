@@ -9,11 +9,6 @@ package com.finger.shoot.entity;
 
 import com.finger.portal.base.model.PageModel;
 import lombok.Data;
-import lombok.Data;
-import org.hibernate.validator.constraints.Length;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
 
 /**
  * 直播团设置
@@ -23,13 +18,17 @@ import java.math.BigDecimal;
  * @since 1.0
  */
 @Data
-public class OrderPhotoOnlineConf extends PageModel {
+public class PhotoOnline extends PageModel {
 
 	//columns START
     /**
      * id       db_column: id 
      */
 	private Long id;
+    /**
+     * 团订单ID       db_column: order_id
+     */
+    private Long orderId;
     /**
      * 直播类型ID       db_column: live_type_id 
      */
@@ -38,6 +37,10 @@ public class OrderPhotoOnlineConf extends PageModel {
      * 直播类型名称       db_column: live_type_name 
      */
 	private String liveTypeName;
+    /**
+     * 直播主题
+     */
+    private String liveName;
     /**
      * 直播封面       db_column: cover_img 
      */
@@ -70,6 +73,23 @@ public class OrderPhotoOnlineConf extends PageModel {
      * 活动介绍（不超过255个字）       db_column: introduce 
      */
 	private String introduce;
+
+    /**
+     * 照片数       db_column: photo_num
+     */
+    //private Integer photoNum;
+
+    /**
+     * 访问数       db_column: access_num
+     */
+    private Integer accessNum;
+
+    /**
+     * 转发数       db_column: forward_num
+     */
+    private Integer forwardNum;
+
+    private String address; //地点
     /**
      * 创建时间       db_column: created_time 
      */

@@ -9,11 +9,6 @@ package com.finger.shoot.entity;
 
 import com.finger.portal.base.model.PageModel;
 import lombok.Data;
-import lombok.Data;
-import org.hibernate.validator.constraints.Length;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
 
 /**
  * 游客表
@@ -29,7 +24,7 @@ public class Visitors extends PageModel {
     /**
      * id       db_column: id 
      */
-	private Integer id;
+	private Long id;
     /**
      * 昵称       db_column: nick_name 
      */

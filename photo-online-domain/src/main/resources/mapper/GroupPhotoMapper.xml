@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.finger.shoot.mapper.GroupPhotoMapper" >
+
+  <resultMap id="GroupPhotoResultMap" type="com.finger.shoot.domain.GroupPhoto" >
+      <result column="id" property="id"/>
+      <result column="group_id" property="groupId"/>
+      <result column="camera_base_url" property="cameraBaseUrl"/>
+      <result column="base_url" property="baseUrl"/>
+      <result column="update_url" property="updateUrl"/>
+      <result column="thumbnail_url" property="thumbnailUrl"/>
+      <result column="filename" property="filename"/>
+      <result column="STATUS" property="status"/>
+      <result column="creator" property="creator"/>
+      <result column="create_time" property="createTime"/>
+      <result column="filesize" property="filesize"/>
+      <result column="type" property="type"/>
+      <result column="yn" property="yn"/>
+      <result column="is_delete" property="isDelete"/>
+      <result column="is_download" property="isDownload"/>
+      <result column="face_status" property="faceStatus"/>
+      <result column="camera_url_source" property="cameraUrlSource"/>
+      <result column="base_url_source" property="baseUrlSource"/>
+      <result column="score" property="score"/>
+      <result column="camera_raw_url" property="cameraRawUrl"/>
+      <result column="is_delete_choice" property="isDeleteChoice"/>
+      <result column="is_choice" property="isChoice"/>
+      <result column="is_mobile" property="isMobile"/>
+      <result column="choice_time" property="choiceTime"/>
+      <result column="base_filesize" property="baseFilesize"/>
+      <result column="update_filesize" property="updateFilesize"/>
+  </resultMap>
+
+  <sql id="groupPhoto_columns">
+      id,group_id,camera_base_url,base_url,update_url,thumbnail_url,filename,STATUS,creator,create_time,filesize,type,yn,is_delete,is_download,face_status,camera_url_source,base_url_source,score,camera_raw_url,is_delete_choice,is_choice,is_mobile,choice_time,base_filesize,update_filesize
+  </sql>
+
+  <select id="selectById" resultMap="GroupPhotoResultMap" parameterType="long" >
+    select 
+      <include refid="groupPhoto_columns" />
+    from t_group_photo
+      where 
+				id = #{id}
+  </select>
+
+  <select id="selectGroupPhotos" resultMap="GroupPhotoResultMap" parameterType="com.finger.shoot.domain.GroupPhoto" >
+    select
+     <include refid="groupPhoto_columns" />
+    from t_group_photo
+    <where>
+        <if test="id != null">
+          AND id = #{id}
+        </if>
+        <if test="groupId != null">
+          AND group_id = #{groupId}
+        </if>
+        <if test="cameraBaseUrl != null">
+          AND camera_base_url = #{cameraBaseUrl}
+        </if>
+        <if test="baseUrl != null">
+          AND base_url = #{baseUrl}
+        </if>
+        <if test="updateUrl != null">
+          AND update_url = #{updateUrl}
+        </if>
+        <if test="thumbnailUrl != null">
+          AND thumbnail_url = #{thumbnailUrl}
+        </if>
+        <if test="filename != null">
+          AND filename = #{filename}
+        </if>
+        <if test="status != null">
+          AND STATUS = #{status}
+        </if>
+        <if test="creator != null">
+          AND creator = #{creator}
+        </if>
+        <if test="createTime != null">
+          AND create_time = #{createTime}
+        </if>
+        <if test="filesize != null">
+          AND filesize = #{filesize}
+        </if>
+        <if test="type != null">
+          AND type = #{type}
+        </if>
+        <if test="yn != null">
+          AND yn = #{yn}
+        </if>
+        <if test="isDelete != null">
+          AND is_delete = #{isDelete}
+        </if>
+        <if test="isDownload != null">
+          AND is_download = #{isDownload}
+        </if>
+        <if test="faceStatus != null">
+          AND face_status = #{faceStatus}
+        </if>
+        <if test="cameraUrlSource != null">
+          AND camera_url_source = #{cameraUrlSource}
+        </if>
+        <if test="baseUrlSource != null">
+          AND base_url_source = #{baseUrlSource}
+        </if>
+        <if test="score != null">
+          AND score = #{score}
+        </if>
+        <if test="cameraRawUrl != null">
+          AND camera_raw_url = #{cameraRawUrl}
+        </if>
+        <if test="isDeleteChoice != null">
+          AND is_delete_choice = #{isDeleteChoice}
+        </if>
+        <if test="isChoice != null">
+          AND is_choice = #{isChoice}
+        </if>
+        <if test="isMobile != null">
+          AND is_mobile = #{isMobile}
+        </if>
+        <if test="choiceTime != null">
+          AND choice_time = #{choiceTime}
+        </if>
+        <if test="baseFilesize != null">
+          AND base_filesize = #{baseFilesize}
+        </if>
+        <if test="updateFilesize != null">
+          AND update_filesize = #{updateFilesize}
+        </if>
+    </where>
+  </select>
+
+  <select id="selectPageGroupPhotos" resultMap="GroupPhotoResultMap" parameterType="com.finger.shoot.domain.GroupPhoto" >
+    select
+     <include refid="groupPhoto_columns" />
+    from t_group_photo
+      <where>
+        <if test="id != null">
+          AND id = #{id}
+        </if>
+        <if test="groupId != null">
+          AND group_id = #{groupId}
+        </if>
+        <if test="cameraBaseUrl != null">
+          AND camera_base_url = #{cameraBaseUrl}
+        </if>
+        <if test="baseUrl != null">
+          AND base_url = #{baseUrl}
+        </if>
+        <if test="updateUrl != null">
+          AND update_url = #{updateUrl}
+        </if>
+        <if test="thumbnailUrl != null">
+          AND thumbnail_url = #{thumbnailUrl}
+        </if>
+        <if test="filename != null">
+          AND filename = #{filename}
+        </if>
+        <if test="status != null">
+          AND STATUS = #{status}
+        </if>
+        <if test="creator != null">
+          AND creator = #{creator}
+        </if>
+        <if test="createTime != null">
+          AND create_time = #{createTime}
+        </if>
+        <if test="filesize != null">
+          AND filesize = #{filesize}
+        </if>
+        <if test="type != null">
+          AND type = #{type}
+        </if>
+        <if test="yn != null">
+          AND yn = #{yn}
+        </if>
+        <if test="isDelete != null">
+          AND is_delete = #{isDelete}
+        </if>
+        <if test="isDownload != null">
+          AND is_download = #{isDownload}
+        </if>
+        <if test="faceStatus != null">
+          AND face_status = #{faceStatus}
+        </if>
+        <if test="cameraUrlSource != null">
+          AND camera_url_source = #{cameraUrlSource}
+        </if>
+        <if test="baseUrlSource != null">
+          AND base_url_source = #{baseUrlSource}
+        </if>
+        <if test="score != null">
+          AND score = #{score}
+        </if>
+        <if test="cameraRawUrl != null">
+          AND camera_raw_url = #{cameraRawUrl}
+        </if>
+        <if test="isDeleteChoice != null">
+          AND is_delete_choice = #{isDeleteChoice}
+        </if>
+        <if test="isChoice != null">
+          AND is_choice = #{isChoice}
+        </if>
+        <if test="isMobile != null">
+          AND is_mobile = #{isMobile}
+        </if>
+        <if test="choiceTime != null">
+          AND choice_time = #{choiceTime}
+        </if>
+        <if test="baseFilesize != null">
+          AND base_filesize = #{baseFilesize}
+        </if>
+        <if test="updateFilesize != null">
+          AND update_filesize = #{updateFilesize}
+        </if>
+      </where>
+  </select>
+
+  <insert id="insert" parameterType="com.finger.shoot.domain.GroupPhoto" keyProperty="id">
+    insert into t_group_photo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+		  <if test="id != null">
+			id,
+		  </if>
+		  <if test="groupId != null">
+			group_id,
+		  </if>
+		  <if test="cameraBaseUrl != null">
+			camera_base_url,
+		  </if>
+		  <if test="baseUrl != null">
+			base_url,
+		  </if>
+		  <if test="updateUrl != null">
+			update_url,
+		  </if>
+		  <if test="thumbnailUrl != null">
+			thumbnail_url,
+		  </if>
+		  <if test="filename != null">
+			filename,
+		  </if>
+		  <if test="status != null">
+			STATUS,
+		  </if>
+		  <if test="creator != null">
+			creator,
+		  </if>
+		  <if test="createTime != null">
+			create_time,
+		  </if>
+		  <if test="filesize != null">
+			filesize,
+		  </if>
+		  <if test="type != null">
+			type,
+		  </if>
+		  <if test="yn != null">
+			yn,
+		  </if>
+		  <if test="isDelete != null">
+			is_delete,
+		  </if>
+		  <if test="isDownload != null">
+			is_download,
+		  </if>
+		  <if test="faceStatus != null">
+			face_status,
+		  </if>
+		  <if test="cameraUrlSource != null">
+			camera_url_source,
+		  </if>
+		  <if test="baseUrlSource != null">
+			base_url_source,
+		  </if>
+		  <if test="score != null">
+			score,
+		  </if>
+		  <if test="cameraRawUrl != null">
+			camera_raw_url,
+		  </if>
+		  <if test="isDeleteChoice != null">
+			is_delete_choice,
+		  </if>
+		  <if test="isChoice != null">
+			is_choice,
+		  </if>
+		  <if test="isMobile != null">
+			is_mobile,
+		  </if>
+		  <if test="choiceTime != null">
+			choice_time,
+		  </if>
+		  <if test="baseFilesize != null">
+			base_filesize,
+		  </if>
+		  <if test="updateFilesize != null">
+			update_filesize,
+		  </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+		  <if test="id != null">
+			#{id},
+		  </if>
+		  <if test="groupId != null">
+			#{groupId},
+		  </if>
+		  <if test="cameraBaseUrl != null">
+			#{cameraBaseUrl},
+		  </if>
+		  <if test="baseUrl != null">
+			#{baseUrl},
+		  </if>
+		  <if test="updateUrl != null">
+			#{updateUrl},
+		  </if>
+		  <if test="thumbnailUrl != null">
+			#{thumbnailUrl},
+		  </if>
+		  <if test="filename != null">
+			#{filename},
+		  </if>
+		  <if test="status != null">
+			#{status},
+		  </if>
+		  <if test="creator != null">
+			#{creator},
+		  </if>
+		  <if test="createTime != null">
+			#{createTime},
+		  </if>
+		  <if test="filesize != null">
+			#{filesize},
+		  </if>
+		  <if test="type != null">
+			#{type},
+		  </if>
+		  <if test="yn != null">
+			#{yn},
+		  </if>
+		  <if test="isDelete != null">
+			#{isDelete},
+		  </if>
+		  <if test="isDownload != null">
+			#{isDownload},
+		  </if>
+		  <if test="faceStatus != null">
+			#{faceStatus},
+		  </if>
+		  <if test="cameraUrlSource != null">
+			#{cameraUrlSource},
+		  </if>
+		  <if test="baseUrlSource != null">
+			#{baseUrlSource},
+		  </if>
+		  <if test="score != null">
+			#{score},
+		  </if>
+		  <if test="cameraRawUrl != null">
+			#{cameraRawUrl},
+		  </if>
+		  <if test="isDeleteChoice != null">
+			#{isDeleteChoice},
+		  </if>
+		  <if test="isChoice != null">
+			#{isChoice},
+		  </if>
+		  <if test="isMobile != null">
+			#{isMobile},
+		  </if>
+		  <if test="choiceTime != null">
+			#{choiceTime},
+		  </if>
+		  <if test="baseFilesize != null">
+			#{baseFilesize},
+		  </if>
+		  <if test="updateFilesize != null">
+			#{updateFilesize},
+		  </if>
+    </trim>
+  </insert>
+</mapper>

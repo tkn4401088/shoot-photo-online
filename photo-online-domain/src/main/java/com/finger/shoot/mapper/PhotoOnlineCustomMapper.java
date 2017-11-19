@@ -23,15 +23,5 @@ public interface PhotoOnlineCustomMapper {
 
     int insert(PhotoOnlineCustom photoOnlineCustom);
 
-    int batchInsert(List<PhotoOnlineCustom> photoOnlineCustoms);
-
-    int deleteById(Long id);
-
-    int updateById(PhotoOnlineCustom photoOnlineCustom);
-
     PhotoOnlineCustom selectById(Long id);
-
-    List<PhotoOnlineCustom> selectPhotoOnlineCustoms(PhotoOnlineCustom photoOnlineCustom);
-
-    List<PhotoOnlineCustom> selectPagePhotoOnlineCustoms(PhotoOnlineCustom photoOnlineCustom);
 }

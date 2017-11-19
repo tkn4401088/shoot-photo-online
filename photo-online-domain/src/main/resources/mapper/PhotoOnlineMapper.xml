@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.finger.shoot.mapper.PhotoOnlineMapper" >
+
+  <resultMap id="PhotoOnlineResultMap" type="com.finger.shoot.entity.PhotoOnline" >
+      <result column="id" property="id"/>
+      <result column="live_type_id" property="liveTypeId"/>
+      <result column="live_name" property="liveName"/>
+      <result column="order_id" property="orderId"/>
+      <result column="live_type_name" property="liveTypeName"/>
+      <result column="cover_img" property="coverImg"/>
+      <result column="banner_img" property="bannerImg"/>
+      <result column="open_time" property="openTime"/>
+      <result column="start_time" property="startTime"/>
+      <result column="end_time" property="endTime"/>
+      <result column="open_auth" property="openAuth"/>
+      <result column="access_pwd" property="accessPwd"/>
+      <result column="introduce" property="introduce"/>
+	  <!--<result column="photo_num" property="photoNum"/>-->
+	  <result column="access_num" property="accessNum"/>
+	  <result column="forward_num" property="forwardNum"/>
+      <result column="created_time" property="createdTime"/>
+      <result column="updated_time" property="updatedTime"/>
+  </resultMap>
+
+  <sql id="photoOnlineConf_columns">
+      id,live_type_id,live_type_name,live_name,order_id,cover_img,banner_img,open_time,start_time,end_time,open_auth,access_pwd,introduce,
+      forward_num,access_num,created_time,updated_time
+  </sql>
+
+  <!-- 根据订单ID查询直播团配置 -->
+  <select id="selectByOrderId" resultMap="PhotoOnlineResultMap" parameterType="java.lang.Long" >
+    select
+	  ifnull((select count(*) from t_shoot_group tsg inner join t_group_photo tgp on tsg.id = tgp.group_id
+	  where tsg.order_no = t1.order_no and tgp.yn = 1 and tgp.is_delete = 1 group by tsg.order_no),0) as photoNum,
+      <include refid="photoOnlineConf_columns" />
+    from t_photo_online t inner join (select id as oid ,order_no from t_order t1) on t1.oid = t.order_id
+      where order_id = #{orderId} and t.yn = 1
+  </select>
+
+	<select id="selectById" resultMap="PhotoOnlineResultMap" parameterType="java.lang.Long" >
+		select
+		ifnull((select count(*) from t_shoot_group tsg inner join t_group_photo tgp on tsg.id = tgp.group_id
+		where tsg.order_no = t1.order_no and tgp.yn = 1 and tgp.is_delete = 1 group by tsg.order_no),0) as photoNum,
+		<include refid="photoOnlineConf_columns" />
+		from t_photo_online t inner join (select id as oid ,order_no from t_order t1) on t1.oid = t.order_id
+		where id = #{id} and t.yn = 1
+	</select>
+
+  <delete id="deleteById" parameterType="java.lang.Long" >
+    delete from t_photo_online
+      where 
+		id = #{id}
+  </delete>
+
+	<update id="updatePhoneOnlineYnByOrderId" parameterType="java.lang.Long" >
+		update t_photo_online set yn = 0
+		where
+		order_id = #{orderId}
+	</update>
+
+  <insert id="insert" parameterType="com.finger.shoot.entity.PhotoOnline" keyProperty="id">
+    insert into t_photo_online
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+		  <if test="id != null">
+			id,
+		  </if>
+		  <if test="liveTypeId != null">
+			live_type_id,
+		  </if>
+		  <if test="liveTypeName != null">
+			live_type_name,
+		  </if>
+        <if test="liveName != null">
+            live_name,
+        </if>
+        <if test="orderId != null">
+            order_id,
+        </if>
+		  <if test="coverImg != null">
+			cover_img,
+		  </if>
+		  <if test="bannerImg != null">
+			banner_img,
+		  </if>
+		  <if test="openTime != null">
+			open_time,
+		  </if>
+		  <if test="startTime != null">
+			start_time,
+		  </if>
+		  <if test="endTime != null">
+			end_time,
+		  </if>
+		  <if test="openAuth != null">
+			open_auth,
+		  </if>
+		  <if test="accessPwd != null">
+			access_pwd,
+		  </if>
+		  <if test="introduce != null">
+			introduce,
+		  </if>
+		  <if test="createdTime != null">
+			created_time,
+		  </if>
+		  <if test="updatedTime != null">
+			updated_time,
+		  </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+		  <if test="id != null">
+			#{id},
+		  </if>
+		  <if test="liveTypeId != null">
+			#{liveTypeId},
+		  </if>
+		  <if test="liveTypeName != null">
+			#{liveTypeName},
+		  </if>
+          <if test="liveName != null">
+            #{liveName},
+          </if>
+          <if test="orderId != null">
+            #{orderId},
+          </if>
+		  <if test="coverImg != null">
+			#{coverImg},
+		  </if>
+		  <if test="bannerImg != null">
+			#{bannerImg},
+		  </if>
+		  <if test="openTime != null">
+			#{openTime},
+		  </if>
+		  <if test="startTime != null">
+			#{startTime},
+		  </if>
+		  <if test="endTime != null">
+			#{endTime},
+		  </if>
+		  <if test="openAuth != null">
+			#{openAuth},
+		  </if>
+		  <if test="accessPwd != null">
+			#{accessPwd},
+		  </if>
+		  <if test="introduce != null">
+			#{introduce},
+		  </if>
+		  <if test="createdTime != null">
+			#{createdTime},
+		  </if>
+		  <if test="updatedTime != null">
+			#{updatedTime},
+		  </if>
+    </trim>
+  </insert>
+
+    <!-- 查询所有有效的直播团 -->
+	<select id="selectPagePhotoOnline" resultMap="PhotoOnlineResultMap" parameterType="com.finger.shoot.entity.PhotoOnline">
+		select t2.id,t1.id as orderId,t2.cover_img as coverImg,t2.banner_img as bannerImg,t2.live_name as liveName,
+		t2.access_num as accessNum,t2.forward_num as forwardNum,t2.open_auth as openAuth,
+		(select ls.`journey_name` from line_sight ls where ls.order_id=t1.id limit 1) as address,
+		ifnull((select count(*) from t_shoot_group tsg inner join t_group_photo tgp on tsg.id = tgp.group_id
+		where tsg.order_no = t1.order_no and tgp.yn = 1 and tgp.is_delete = 1 group by tsg.order_no),0) as photoNum,
+		(case when open_time = 2 then concat(date_format(t2.start_time,'%Y-%m-%d'),'~',date_format(t2.end_time,'%Y-%m-%d'))
+		when t3.shoot_time is null then date_format(t1.start_time,'%Y-%m-%d') else date_format(t3.shoot_time,'%Y-%m-%d') end) as startTime
+		from t_order t1 inner join t_photo_online t2 on t1.id = t2.order_id
+		left join (select `journey_name`,shoot_time,order_id from line_sight limit 1) t3 on t3.order_id = t1.id
+		where t1.is_photo_online = 1 and t2.yn = 1
+		and t1.status &lt;$gt; 3 and ((t2.open_time = 2 and end_time > now()) or open_time = 1)
+		<if test="liveTypeId != null or liveTypeId == '' ">
+			and t2.live_type_id = #{liveTypeId}
+		</if>
+	</select>
+</mapper>

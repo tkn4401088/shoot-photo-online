@@ -9,11 +9,6 @@ package com.finger.shoot.entity;
 
 import com.finger.portal.base.model.PageModel;
 import lombok.Data;
-import lombok.Data;
-import org.hibernate.validator.constraints.Length;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
 
 /**
  * 照片直播客户制作物表
@@ -34,6 +29,8 @@ public class PhotoOnlineCustom extends PageModel {
      * 游客ID       db_column: v_id 
      */
 	private Long vid;
+
+    private Long orderId;
     /**
      * 制作物类型：1拼图、2小视频、3杂志封面       db_column: works_type 
      */
