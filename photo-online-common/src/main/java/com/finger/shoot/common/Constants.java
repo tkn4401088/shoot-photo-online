@@ -1,21 +1,27 @@
 package com.finger.shoot.common;
 
+import java.util.Map;
+
 /**
  * Created by pengmd on 2016/7/28.
  */
 public class Constants {
     public final static String SUCCESS = "0";  //成功
-    public final static  String nonExistentCode ="404";
-    public final static String nonExistentMsg = "";
-    public final static String ERR_CODE_REPEAT_REQUEST="504";
-    public final static String ERR_MSG_REPEAT_REQUEST="订单已存在,不允许重复请求！";
-    public final static String ERR_CODE_NOT_ENOUGH="505";
-    public final static String ERR_MSG_NOT_ENOUGH="余额不足.请求失败！";
-    public final static String ERR_CODE_NOT_ORDER="506";
-    public final static String ERR_MSG_NOT_ORDER="订单不存在！";
+    public final static String ERR_CODE_404= "404";
+    public final static String ERR_CODE_500= "500";
+    public final static String ERR_CODE_1001= "1001";
+    public final static String ERR_CODE_1002= "1002";
 
-    public final static String CREDIT_LIMIT_BALANCE ="credit_limit_balance";
-    public final static Long BALANCE_LOCK=10L;
-    public final static int BALANCE_EDIT_ADD_TYPE=1;
-    public final static int BALANCE_EDIT_SUBTRACT_TYPE=2;
+    public static Map<String,String> ERR_MSG_MAP;
+
+    static{
+        ERR_MSG_MAP.put(ERR_CODE_1001,"该订单没有直播配置！");
+        ERR_MSG_MAP.put(ERR_CODE_1002,"保存失败！");
+        ERR_MSG_MAP.put(ERR_CODE_404,"无效请求！");
+        ERR_MSG_MAP.put(ERR_CODE_500,"内部错误！");
+        ERR_MSG_MAP.put(SUCCESS,"成功");
+    }
+
+
+    public final static String PHOTO_ONLINE_STATIC_DATA_TYPE = "PHOTO_ONLINE_TYPE";
 }
