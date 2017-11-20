@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.finger.shoot.mapper.GroupPhotoMapper" >
 
-  <resultMap id="GroupPhotoResultMap" type="com.finger.shoot.domain.GroupPhoto" >
+  <resultMap id="GroupPhotoResultMap" type="com.finger.shoot.entity.GroupPhoto" >
       <result column="id" property="id"/>
       <result column="group_id" property="groupId"/>
       <result column="camera_base_url" property="cameraBaseUrl"/>
@@ -43,7 +43,7 @@
 				id = #{id}
   </select>
 
-  <select id="selectGroupPhotos" resultMap="GroupPhotoResultMap" parameterType="com.finger.shoot.domain.GroupPhoto" >
+  <select id="selectGroupPhotos" resultMap="GroupPhotoResultMap" parameterType="com.finger.shoot.entity.GroupPhoto" >
     select
      <include refid="groupPhoto_columns" />
     from t_group_photo
@@ -129,7 +129,7 @@
     </where>
   </select>
 
-  <select id="selectPageGroupPhotos" resultMap="GroupPhotoResultMap" parameterType="com.finger.shoot.domain.GroupPhoto" >
+  <select id="selectPageGroupPhotos" resultMap="GroupPhotoResultMap" parameterType="com.finger.shoot.entity.GroupPhoto" >
     select
      <include refid="groupPhoto_columns" />
     from t_group_photo
@@ -215,7 +215,7 @@
       </where>
   </select>
 
-  <insert id="insert" parameterType="com.finger.shoot.domain.GroupPhoto" keyProperty="id">
+  <insert id="insert" parameterType="com.finger.shoot.entity.GroupPhoto" keyProperty="id">
     insert into t_group_photo
     <trim prefix="(" suffix=")" suffixOverrides="," >
 		  <if test="id != null">
