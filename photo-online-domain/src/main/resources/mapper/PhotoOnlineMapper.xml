@@ -34,7 +34,7 @@
 	  ifnull((select count(*) from t_shoot_group tsg inner join t_group_photo tgp on tsg.id = tgp.group_id
 	  where tsg.order_no = t1.order_no and tgp.yn = 1 and tgp.is_delete = 1 group by tsg.order_no),0) as photoNum,
       <include refid="photoOnlineConf_columns" />
-    from t_photo_online t inner join (select id as oid ,order_no from t_order t1) on t1.oid = t.order_id
+    from t_photo_online t inner join (select id as oid ,order_no from t_order)t1 on t1.oid = t.order_id
       where order_id = #{orderId} and t.yn = 1
   </select>
 
@@ -43,7 +43,7 @@
 		ifnull((select count(*) from t_shoot_group tsg inner join t_group_photo tgp on tsg.id = tgp.group_id
 		where tsg.order_no = t1.order_no and tgp.yn = 1 and tgp.is_delete = 1 group by tsg.order_no),0) as photoNum,
 		<include refid="photoOnlineConf_columns" />
-		from t_photo_online t inner join (select id as oid ,order_no from t_order t1) on t1.oid = t.order_id
+		from t_photo_online t inner join (select id as oid ,order_no from t_order)t1 on t1.oid = t.order_id
 		where id = #{id} and t.yn = 1
 	</select>
 

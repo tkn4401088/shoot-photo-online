@@ -1,5 +1,6 @@
 package com.finger.shoot.common;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -12,7 +13,7 @@ public class Constants {
     public final static String ERR_CODE_1001= "1001";
     public final static String ERR_CODE_1002= "1002";
 
-    public static Map<String,String> ERR_MSG_MAP;
+    public static Map<String,String> ERR_MSG_MAP = new HashMap<String, String>();
 
     static{
         ERR_MSG_MAP.put(ERR_CODE_1001,"该订单没有直播配置！");
