@@ -37,16 +37,12 @@ public class PhotoOnlineServiceImpl implements PhotoOnlineService {
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class, isolation = Isolation.READ_COMMITTED)
     public String savePhotoOnline(PhotoOnline photoOnline) {
         PhotoOnline result = photoOnlineMapper.selectByOrderId(photoOnline.getOrderId());
-        if(null == result || null == result.getId() || result.getId() <=0){
-            return Constants.ERR_CODE_1001;
+        if(result !=null && result.getId()>0){
+            photoOnlineMapper.deleteById(result.getId());
         }
-
-        int rst = photoOnlineMapper.deleteById(result.getId());
-        if(rst >0){
-            rst = photoOnlineMapper.insert(photoOnline);
-            if(rst > 0){
-                return Constants.SUCCESS;
-            }
+        int rst = photoOnlineMapper.insert(photoOnline);
+        if(rst > 0){
+            return Constants.SUCCESS;
         }
         return Constants.ERR_CODE_500;
     }
