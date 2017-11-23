@@ -90,7 +90,7 @@ public class PhotoOnlineController {
             PhotoOnline retPhotoOnline = photoOnlineService.selectByOrderId(photoOnline.getOrderId());
             if(null != retPhotoOnline) {
                 susResp.setData(BeanUtil.getProperties(retPhotoOnline,
-                        new String[]{"liveName", "coverImg","bannerImg", "startTime","photoNum","accessNum","forwardNum", "introduce"},
+                        new String[]{"openTime","endTime","openAuth","liveTypeId","liveTypeName","liveName", "coverImg","bannerImg", "startTime","photoNum","accessNum","forwardNum", "introduce"},
                         false));
             }
         }catch (ParamsCheckFailException e){
