@@ -29,6 +29,8 @@ public class PhotoOnline extends PageModel {
      * 团订单ID       db_column: order_id
      */
     private Long orderId;
+
+    private String orderNo;
     /**
      * 直播类型ID       db_column: live_type_id 
      */
@@ -77,7 +79,7 @@ public class PhotoOnline extends PageModel {
     /**
      * 照片数       db_column: photo_num
      */
-    //private Integer photoNum;
+    private Integer photoNum;
 
     /**
      * 访问数       db_column: access_num
