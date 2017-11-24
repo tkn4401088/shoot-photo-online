@@ -66,5 +66,12 @@ public interface PhotoOnlineService {
 	 * @return
 	 */
 	int updateOrderByOrderId(Long orderId);
+
+	/**
+	 * 更新直播团访问数
+	 * @param orderId
+	 * @return
+     */
+	int updateAccessNumByOrderId(Long orderId);
 }
 
