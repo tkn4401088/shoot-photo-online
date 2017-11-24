@@ -73,7 +73,30 @@ public class PhotoOnlineController {
         }
         return susResp;
     }
-
+    /**
+     * 取消直播团设置信息
+     * @return
+     */
+    @ApiOperation(value="根据订单ID变更直播团状态")
+    @RequestMapping(value = "/changeStatusByOrderId", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public Object changeStatusByOrderId(@RequestBody PhotoOnline photoOnline, BindingResult result){
+        ResponseModel susResp = null;
+        try {
+            //校验参数
+            ValidatedUtil.validatedParams(result);
+            String code = photoOnlineService.changeStatusByOrderId(photoOnline);
+            susResp = new ResponseModel(code, Constants.ERR_MSG_MAP.get(code));
+        }catch (ParamsCheckFailException e){
+            log.error(ExceptionPrintUtil.getMessage(e));
+            e.printStackTrace();
+            susResp = new ResponseModel(e.getCode(), e.getMsg());
+        }catch (Exception e){
+            susResp = ResponseModel.getFailedResponseModel().setData(e.getMessage());
+            log.error(ExceptionPrintUtil.getMessage(e));
+            e.printStackTrace();
+        }
+        return susResp;
+    }
 
     @ApiOperation(value="根据订单ID查询直播设置")
     @ApiResponses({

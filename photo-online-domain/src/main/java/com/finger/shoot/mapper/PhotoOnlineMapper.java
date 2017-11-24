@@ -37,6 +37,11 @@ public interface PhotoOnlineMapper {
 
     int updatePhoneOnlineYnByOrderId(Long orderId);
     int updateOrderByOrderId(Long orderId);
-
+    /**
+     * 变更t_order和t_photo_online直播团状态
+     * @param orderId
+     * @return
+     */
+    int updateStatusByOrderId(Long orderId);
     PhotoOnline selectById(Long id);
 }

@@ -37,12 +37,22 @@ public class PhotoOnlineServiceImpl implements PhotoOnlineService {
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class, isolation = Isolation.READ_COMMITTED)
     public String savePhotoOnline(PhotoOnline photoOnline) {
         PhotoOnline result = photoOnlineMapper.selectByOrderId(photoOnline.getOrderId());
-        if(result !=null && result.getId()>0){
+        if (result != null && result.getId() > 0) {
             photoOnlineMapper.deleteById(result.getId());
         }
         int rst = photoOnlineMapper.insert(photoOnline);
-        if(rst > 0){
+        if (rst > 0) {
             photoOnlineMapper.updateOrderByOrderId(result.getOrderId());
+            return Constants.SUCCESS;
+        }
+        return Constants.ERR_CODE_500;
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class, isolation = Isolation.READ_COMMITTED)
+    public String changeStatusByOrderId(PhotoOnline photoOnline) {
+        int result = photoOnlineMapper.updateStatusByOrderId(photoOnline.getOrderId());
+        if (result > 0) {
+
             return Constants.SUCCESS;
         }
         return Constants.ERR_CODE_500;
@@ -67,6 +77,7 @@ public class PhotoOnlineServiceImpl implements PhotoOnlineService {
     public int updatePhoneOnlineYnByOrderId(Long orderId) {
         return photoOnlineMapper.updatePhoneOnlineYnByOrderId(orderId);
     }
+
     @Override
     public int updateOrderByOrderId(Long orderId) {
         return photoOnlineMapper.updateOrderByOrderId(orderId);

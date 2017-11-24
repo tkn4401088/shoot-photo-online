@@ -25,7 +25,12 @@ public interface PhotoOnlineService {
 	 * @return
      */
 	String savePhotoOnline(PhotoOnline photoOnline);
-
+	/**
+	 * 根据订单ID来更改直播团状态
+	 * @param orderId
+	 * @return
+	 */
+	String changeStatusByOrderId(PhotoOnline photoOnline);
 	/**
 	 * 根据订单ID来查询数据
 	 * @param orderId

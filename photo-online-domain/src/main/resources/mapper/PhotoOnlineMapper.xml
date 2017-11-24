@@ -65,6 +65,13 @@
 		id = #{orderId}
 	</update>
 
+	<update id="updateStatusByOrderId" parameterType="java.lang.Long" >
+		update t_order t1 ,t_photo_online t2 set t1.is_photo_online = 0,t2.yn=0
+		where
+		t1.id = #{orderId} and t2.order_id = #{orderId}
+	</update>
+
+
   <insert id="insert" parameterType="com.finger.shoot.entity.PhotoOnline" keyProperty="id">
     insert into t_photo_online
     <trim prefix="(" suffix=")" suffixOverrides="," >
