@@ -161,7 +161,7 @@ public class PhotoOnlineController {
                 photoOnlineService.updateAccessNumByOrderId(retPhotoOnline.getOrderId());
 
                 susResp.setData(BeanUtil.getProperties(retPhotoOnline,
-                        new String[]{"orderNo","liveName", "coverImg","bannerImg", "startTime","photoNum","accessNum","forwardNum", "introduce","openAuth","accessPwd"},
+                        new String[]{"orderNo","liveName", "coverImg","bannerImg", "startTime","photoNum","accessNum","forwardNum", "introduce","openAuth","accessPwd","address"},
                         false));
             }
         }catch (ParamsCheckFailException e){
@@ -192,7 +192,7 @@ public class PhotoOnlineController {
             if(null != retPhotoOnline) {
                 susResp.setData(BeanUtil.getListProperties(retPhotoOnline,
                         new String[]{"id","orderId","curPage","pageCount","rowsCount","liveName", "coverImg","photoNum","accessNum","forwardNum",
-                                "bannerImg","startTime", "openAuth","accessPwd","introduce"},
+                                "bannerImg","startTime", "openAuth","accessPwd","introduce","address"},
                         false));
             }
         }catch (ParamsCheckFailException e){

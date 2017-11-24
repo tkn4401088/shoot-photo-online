@@ -42,6 +42,7 @@
 		select
 		ifnull((select count(*) from t_shoot_group tsg inner join t_group_photo tgp on tsg.id = tgp.group_id
 		where tsg.order_no = t1.order_no and tgp.yn = 1 and tgp.is_delete = 1 group by tsg.order_no),0) as photoNum,t1.order_no as orderNo,
+		(select ls.`journey_name` from line_sight ls where ls.order_id=t1.oid limit 1) as address,
 		<include refid="photoOnlineConf_columns" />
 		from t_photo_online t inner join (select id as oid ,order_no from t_order)t1 on t1.oid = t.order_id
 		where id = #{id} and t.yn = 1
@@ -67,8 +68,7 @@
 
 	<update id="updateStatusByOrderId" parameterType="java.lang.Long" >
 		update t_order t1 ,t_photo_online t2 set t1.is_photo_online = 0,t2.yn=0
-		where
-		t1.id = #{orderId} and t2.order_id = #{orderId}
+		where t1.id = t2.order_id and t2.order_id = #{orderId}
 	</update>
 
 
@@ -182,7 +182,7 @@
 		from t_order t1 inner join t_photo_online t2 on t1.id = t2.order_id
 		left join (select `journey_name`,shoot_time,order_id from line_sight limit 1) t3 on t3.order_id = t1.id
 		where t1.is_photo_online = 1 and t2.yn = 1
-		and t1.status &lt;&gt;3 and ((t2.open_time = 2 and end_time > now()) or open_time = 1)
+		and t1.status &lt;&gt;3 and ((t2.open_time = 2 and end_time > now()) or open_time = 1)``
 		<if test="liveTypeId != null and liveTypeId != '' ">
 			and t2.live_type_id = #{liveTypeId}
 		</if>

@@ -42,7 +42,7 @@ public class PhotoOnlineServiceImpl implements PhotoOnlineService {
         }
         int rst = photoOnlineMapper.insert(photoOnline);
         if (rst > 0) {
-            photoOnlineMapper.updateOrderByOrderId(result.getOrderId());
+            photoOnlineMapper.updateOrderByOrderId(photoOnline.getOrderId());
             return Constants.SUCCESS;
         }
         return Constants.ERR_CODE_500;
