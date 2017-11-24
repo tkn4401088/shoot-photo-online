@@ -101,6 +101,13 @@ public class PhotoOnline extends PageModel {
      */
 	private java.util.Date updatedTime;
 	//columns END
-
+    /**
+     * 创建时间       db_column: created_time
+     */
+    private String url; //地点
+    /**
+     * 创建时间       db_column: created_time
+     */
+    private String QRCode; //地点
 }
 

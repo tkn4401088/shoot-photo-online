@@ -18,13 +18,23 @@ import com.finger.shoot.service.StaticDataService;
 import com.finger.shoot.utils.BeanUtil;
 import com.finger.shoot.utils.ValidatedUtil;
 import com.finger.shoot.utils.ExceptionPrintUtil;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import sun.misc.BASE64Encoder;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 
@@ -111,10 +121,14 @@ public class PhotoOnlineController {
             //校验参数
             ValidatedUtil.validatedParams(result);
             PhotoOnline retPhotoOnline = photoOnlineService.selectByOrderId(photoOnline.getOrderId());
+            String  QRCode = createImage(photoOnline.getUrl());
+            retPhotoOnline.setQRCode(QRCode);
             if(null != retPhotoOnline) {
                 susResp.setData(BeanUtil.getProperties(retPhotoOnline,
-                        new String[]{"openTime","endTime","openAuth","accessPwd","liveTypeId","liveTypeName","liveName", "coverImg","bannerImg", "startTime","photoNum","accessNum","forwardNum", "introduce"},
+                        new String[]{"QRCode","openTime","endTime","openAuth","accessPwd","liveTypeId","liveTypeName","liveName", "coverImg","bannerImg", "startTime","photoNum","accessNum","forwardNum", "introduce"},
                         false));
+
+
             }
         }catch (ParamsCheckFailException e){
             log.error(ExceptionPrintUtil.getMessage(e));
@@ -219,4 +233,33 @@ public class PhotoOnlineController {
         }
         return susResp;
     }
+    private String createImage(String url) {
+        int width = 400;
+        int height = 400;
+        QRCodeWriter writer = new QRCodeWriter();
+        BitMatrix m = null;
+        try {
+            m = writer.encode(url, BarcodeFormat.QR_CODE, height, width);
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
+        BufferedImage bufferedImage = MatrixToImageWriter.toBufferedImage(m);
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        try {
+            ImageIO.write(bufferedImage, "png", out);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            bufferedImage.flush();
+            try {
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        BASE64Encoder encoder = new BASE64Encoder();
+        String img = encoder.encode(out.toByteArray());
+                 return img;
+    }
+
 }
