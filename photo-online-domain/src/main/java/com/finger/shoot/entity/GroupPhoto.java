@@ -10,6 +10,8 @@ package com.finger.shoot.entity;
 import com.finger.portal.base.model.PageModel;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * 团照片信息表
  * 
@@ -127,5 +129,6 @@ public class GroupPhoto extends PageModel{
 	private Integer updateFilesize;
 	//columns END
 
+    private List<String> ids;
 }
 

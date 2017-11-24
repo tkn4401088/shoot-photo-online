@@ -44,4 +44,7 @@ public interface PhotoOnlineMapper {
      */
     int updateStatusByOrderId(Long orderId);
     PhotoOnline selectById(Long id);
+
+
+    int updateAccessNumByOrderId(Long orderId);
 }

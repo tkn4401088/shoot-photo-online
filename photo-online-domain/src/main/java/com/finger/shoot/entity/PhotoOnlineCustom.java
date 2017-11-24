@@ -57,5 +57,6 @@ public class PhotoOnlineCustom extends PageModel {
 	private java.util.Date createdTime;
 	//columns END
 
+    private String[] photoIds;
 }
 
