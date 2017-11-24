@@ -113,7 +113,7 @@ public class PhotoOnlineController {
             PhotoOnline retPhotoOnline = photoOnlineService.selectByOrderId(photoOnline.getOrderId());
             if(null != retPhotoOnline) {
                 susResp.setData(BeanUtil.getProperties(retPhotoOnline,
-                        new String[]{"openTime","endTime","openAuth","liveTypeId","liveTypeName","liveName", "coverImg","bannerImg", "startTime","photoNum","accessNum","forwardNum", "introduce"},
+                        new String[]{"openTime","endTime","openAuth","accessPwd","liveTypeId","liveTypeName","liveName", "coverImg","bannerImg", "startTime","photoNum","accessNum","forwardNum", "introduce"},
                         false));
             }
         }catch (ParamsCheckFailException e){
@@ -143,8 +143,11 @@ public class PhotoOnlineController {
             ValidatedUtil.validatedParams(result);
             PhotoOnline retPhotoOnline = photoOnlineService.selectById(photoOnline.getId());
             if(null != retPhotoOnline) {
+                //更新访问数
+                photoOnlineService.updateAccessNumByOrderId(retPhotoOnline.getOrderId());
+
                 susResp.setData(BeanUtil.getProperties(retPhotoOnline,
-                        new String[]{"orderNo","liveName", "coverImg","bannerImg", "startTime","photoNum","accessNum","forwardNum", "introduce"},
+                        new String[]{"orderNo","liveName", "coverImg","bannerImg", "startTime","photoNum","accessNum","forwardNum", "introduce","openAuth","accessPwd"},
                         false));
             }
         }catch (ParamsCheckFailException e){
@@ -175,7 +178,7 @@ public class PhotoOnlineController {
             if(null != retPhotoOnline) {
                 susResp.setData(BeanUtil.getListProperties(retPhotoOnline,
                         new String[]{"id","orderId","curPage","pageCount","rowsCount","liveName", "coverImg","photoNum","accessNum","forwardNum",
-                                "bannerImg","startTime", "openAuth","introduce"},
+                                "bannerImg","startTime", "openAuth","accessPwd","introduce"},
                         false));
             }
         }catch (ParamsCheckFailException e){

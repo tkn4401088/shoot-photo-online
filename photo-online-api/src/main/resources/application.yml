@@ -50,6 +50,13 @@ spring:
           #username: dev_xxx
           #password: dev_xxxx
           database: shoot_sit
+  oss:
+     pic: zjwk-uat-online
+     jscss: zjwk-uat-online
+     endpoint: oss-cn-shanghai.aliyuncs.com
+     key: Tib7HIJDR2nQz618
+     secret: SZa299lYI4VqShB71yUYgH7xJkNz1G
+     url: http://img.test.fingercrm.cn/
 server:
   context-path: ${name:/shoot-photo-online}
   port: ${port:8095}
