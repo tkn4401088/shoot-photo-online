@@ -144,7 +144,7 @@ public class PhotoOnlineController {
             PhotoOnline retPhotoOnline = photoOnlineService.selectById(photoOnline.getId());
             if(null != retPhotoOnline) {
                 susResp.setData(BeanUtil.getProperties(retPhotoOnline,
-                        new String[]{"liveName", "coverImg","bannerImg", "startTime","photoNum","accessNum","forwardNum", "introduce"},
+                        new String[]{"orderNo","liveName", "coverImg","bannerImg", "startTime","photoNum","accessNum","forwardNum", "introduce"},
                         false));
             }
         }catch (ParamsCheckFailException e){
@@ -174,7 +174,7 @@ public class PhotoOnlineController {
             List<PhotoOnline> retPhotoOnline = photoOnlineService.selectPagePhotoOnline(photoOnline);
             if(null != retPhotoOnline) {
                 susResp.setData(BeanUtil.getListProperties(retPhotoOnline,
-                        new String[]{"id","orderId","curPage","rowsCount","liveName", "coverImg","photoNum","accessNum","forwardNum",
+                        new String[]{"id","orderId","curPage","pageCount","rowsCount","liveName", "coverImg","photoNum","accessNum","forwardNum",
                                 "bannerImg","startTime", "openAuth","introduce"},
                         false));
             }
