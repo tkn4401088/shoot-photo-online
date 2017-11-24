@@ -42,6 +42,7 @@ public class PhotoOnlineServiceImpl implements PhotoOnlineService {
         }
         int rst = photoOnlineMapper.insert(photoOnline);
         if(rst > 0){
+            photoOnlineMapper.updateOrderByOrderId(result.getOrderId());
             return Constants.SUCCESS;
         }
         return Constants.ERR_CODE_500;
@@ -65,5 +66,9 @@ public class PhotoOnlineServiceImpl implements PhotoOnlineService {
     @Override
     public int updatePhoneOnlineYnByOrderId(Long orderId) {
         return photoOnlineMapper.updatePhoneOnlineYnByOrderId(orderId);
+    }
+    @Override
+    public int updateOrderByOrderId(Long orderId) {
+        return photoOnlineMapper.updateOrderByOrderId(orderId);
     }
 }

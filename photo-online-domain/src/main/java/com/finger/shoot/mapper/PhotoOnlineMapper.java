@@ -36,6 +36,7 @@ public interface PhotoOnlineMapper {
 
 
     int updatePhoneOnlineYnByOrderId(Long orderId);
+    int updateOrderByOrderId(Long orderId);
 
     PhotoOnline selectById(Long id);
 }

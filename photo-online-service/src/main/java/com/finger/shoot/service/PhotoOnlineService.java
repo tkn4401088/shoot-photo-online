@@ -53,7 +53,13 @@ public interface PhotoOnlineService {
 	 * 更新状态
 	 * @param orderId
 	 * @return
-     */
+	 */
 	int updatePhoneOnlineYnByOrderId(Long orderId);
+	/**
+	 * 更新直播团状态
+	 * @param orderId
+	 * @return
+	 */
+	int updateOrderByOrderId(Long orderId);
 }
 
