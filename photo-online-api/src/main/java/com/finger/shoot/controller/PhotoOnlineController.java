@@ -121,14 +121,14 @@ public class PhotoOnlineController {
             //校验参数
             ValidatedUtil.validatedParams(result);
             PhotoOnline retPhotoOnline = photoOnlineService.selectByOrderId(photoOnline.getOrderId());
-            String  QRCode = createImage(photoOnline.getUrl());
-            retPhotoOnline.setQRCode(QRCode);
             if(null != retPhotoOnline) {
+                if(null!=photoOnline.getUrl() && !"".equals(photoOnline.getUrl())){
+                    String  QRCode = createImage(photoOnline.getUrl());
+                    retPhotoOnline.setQRCode(QRCode);
+                }
                 susResp.setData(BeanUtil.getProperties(retPhotoOnline,
                         new String[]{"QRCode","openTime","endTime","openAuth","accessPwd","liveTypeId","liveTypeName","liveName", "coverImg","bannerImg", "startTime","photoNum","accessNum","forwardNum", "introduce"},
                         false));
-
-
             }
         }catch (ParamsCheckFailException e){
             log.error(ExceptionPrintUtil.getMessage(e));
