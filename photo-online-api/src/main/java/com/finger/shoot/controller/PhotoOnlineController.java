@@ -28,6 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import sun.misc.BASE64Encoder;
 
@@ -161,7 +162,7 @@ public class PhotoOnlineController {
                 photoOnlineService.updateAccessNumByOrderId(retPhotoOnline.getOrderId());
 
                 susResp.setData(BeanUtil.getProperties(retPhotoOnline,
-                        new String[]{"isApproval","orderNo","liveName", "coverImg","bannerImg", "startTime","photoNum","accessNum","forwardNum", "introduce","openAuth","accessPwd","address"},
+                        new String[]{"orderId", "isApproval","orderNo","liveName", "coverImg","bannerImg", "startTime","photoNum","accessNum","forwardNum", "introduce","openAuth","accessPwd","address"},
                         false));
             }
         }catch (ParamsCheckFailException e){
@@ -260,6 +261,40 @@ public class PhotoOnlineController {
         BASE64Encoder encoder = new BASE64Encoder();
         String img = encoder.encode(out.toByteArray());
                  return img;
+    }
+
+
+
+    /**
+     * 校验 是否是直播团  且  是否需要审核
+     * @param photoOnline
+     * @param result
+     * @return
+     */
+    @RequestMapping(value = "/judgeIsOnlineTour", method = RequestMethod.POST)
+    public Object judgeIsOnlineTour(@RequestBody  @Validated(PhotoOnline.ValidateJudgeIsOnlineTour.class) PhotoOnline photoOnline, BindingResult result){
+        ResponseModel susResp = ResponseModel.getSuccessResponseModel();
+        try {
+            //校验参数
+            ValidatedUtil.validatedParams(result);
+
+            PhotoOnline po = photoOnlineService.judgeIsOnlineTour(photoOnline);
+            if(po == null){
+                throw new Exception("该团不是直播团");
+            }else if(po.getIsApproval() == 1){
+                throw new Exception("该团需要照片需要审核");
+            }
+            susResp.setData(po);
+        }catch (ParamsCheckFailException e){
+            log.error(ExceptionPrintUtil.getMessage(e));
+            e.printStackTrace();
+            susResp = new ResponseModel(e.getCode(), e.getMsg());
+        }catch (Exception e){
+            susResp = ResponseModel.getFailedResponseModel().setMsg(e.getMessage());
+            log.error(ExceptionPrintUtil.getMessage(e));
+            e.printStackTrace();
+        }
+        return susResp;
     }
 
 }

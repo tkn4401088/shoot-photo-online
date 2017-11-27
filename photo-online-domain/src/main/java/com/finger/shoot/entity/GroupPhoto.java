@@ -132,5 +132,10 @@ public class GroupPhoto extends PageModel{
     private List<String> ids;
 
     private String photographer;
+
+    private Long tripId;  //行程ID
+
+    private String journeyName;  //行程景点名称
+
 }
 

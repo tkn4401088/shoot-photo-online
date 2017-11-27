@@ -47,4 +47,11 @@ public interface PhotoOnlineMapper {
 
 
     int updateAccessNumByOrderId(Long orderId);
+
+    /**
+     * 校验 是否是直播团  且  是否需要审核
+     * @param photoOnline
+     * @return
+     */
+    PhotoOnline judgeIsOnlineTour(PhotoOnline photoOnline);
 }

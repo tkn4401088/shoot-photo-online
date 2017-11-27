@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
@@ -129,8 +130,6 @@ public class ImageUtils {
         // 计算新图片的长和高
         int allw = 0, allh = 0, allwMax = 0, allhMax = 0;
         for (BufferedImage img : imgs) {
-            allw += img.getWidth();
-            allh += img.getHeight();
             if (img.getWidth() > allwMax) {
                 allwMax = img.getWidth();
             }
@@ -138,6 +137,17 @@ public class ImageUtils {
                 allhMax = img.getHeight();
             }
         }
+
+        for (BufferedImage img : imgs) {
+            if (img.getWidth() < allwMax) {
+                allw += allwMax;
+                allh += allwMax / img.getWidth() * img.getHeight();
+            }else{
+                allw += img.getWidth();
+                allh += img.getHeight();
+            }
+        }
+
         // 创建新图片
         if (isHorizontal) {
             DestImage = new BufferedImage(allw, allhMax, BufferedImage.TYPE_INT_RGB);
@@ -151,6 +161,12 @@ public class ImageUtils {
             BufferedImage img = imgs[i];
             int w1 = img.getWidth();
             int h1 = img.getHeight();
+            if(w1 < allwMax){  //缩放图片
+                h1 = allwMax / w1 * h1;
+                w1 = allwMax;
+                img = resize(img, w1, h1);
+            }
+
             // 从图片中读取RGB
             int[] ImageArrayOne = new int[w1 * h1];
             ImageArrayOne = img.getRGB(0, 0, w1, h1, ImageArrayOne, 0, w1); // 逐行扫描图像中各个像素的RGB到数组中
@@ -165,6 +181,33 @@ public class ImageUtils {
         return DestImage;
     }
 
+    /**
+     * 放大或缩小图片
+     * @param source
+     * @param targetW
+     * @param targetH
+     * @return
+     */
+    public static BufferedImage resize(BufferedImage source, int targetW, int targetH) {
+        int width = source.getWidth();// 图片宽度
+        int height = source.getHeight();// 图片高度
+        return zoomInImage(source, targetW, targetH);
+    }
+
+    /**
+     * 对图片进行强制放大或缩小
+     *
+     * @param originalImage
+     *            原始图片
+     * @return
+     */
+    public static BufferedImage zoomInImage(BufferedImage originalImage, int width, int height) {
+        BufferedImage newImage = new BufferedImage(width, height, originalImage.getType());
+        Graphics g = newImage.getGraphics();
+        g.drawImage(originalImage, 0, 0, width, height, null);
+        g.dispose();
+        return newImage;
+    }
 
     /**
      * 合并图片

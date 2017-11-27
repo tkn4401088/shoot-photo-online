@@ -13,6 +13,7 @@ import com.finger.shoot.common.Constants;
 import com.finger.shoot.common.FileObject;
 import com.finger.shoot.configuration.OssBeanConfiguration;
 import com.finger.shoot.entity.GroupPhoto;
+import com.finger.shoot.entity.PhotoOnline;
 import com.finger.shoot.entity.PhotoOnlineCustom;
 import com.finger.shoot.exception.ParamsCheckFailException;
 import com.finger.shoot.service.GroupPhotoService;

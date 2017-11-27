@@ -29,6 +29,8 @@
       <result column="choice_time" property="choiceTime"/>
       <result column="base_filesize" property="baseFilesize"/>
       <result column="update_filesize" property="updateFilesize"/>
+      <result column="tripId" property="tripId"/>
+      <result column="journeyName" property="journeyName"/>
   </resultMap>
 
   <sql id="groupPhoto_columns">
@@ -45,11 +47,26 @@
 
   <select id="selectGroupPhotos" resultMap="GroupPhotoResultMap" parameterType="com.finger.shoot.entity.GroupPhoto" >
       select
-      <include refid="groupPhoto_columns" />,t1.photographer
-      from t_group_photo t left join (select id as sid,order_no,photographer from t_shoot_group) t1 on t.group_id = t1.sid
+      <include refid="groupPhoto_columns" />,t1.photographer, ls.id as tripId, ls.journey_name as journeyName
+      from t_group_photo t
+      left join (select id as sid,order_no,photographer from t_shoot_group) t1 on t.group_id = t1.sid
       left join (select id as oid,order_no from t_order) t2 on t1.order_no = t2.order_no
       left join (select id as pid,order_id from t_photo_online) t3 on t3.order_id = t2.oid
-      where t.is_delete = 1 and t.yn = 1 and t3.pid = #{id} and thumbnail_url is not null
+      left join line_sight ls ON ls.order_id = t3.order_id
+      left join t_journey_photoer jp ON (jp.photographer_id = t1.photographer_id AND jp.shoot_journey_id = ls.id)
+      where t.is_delete = 1 and t.yn = 1  and thumbnail_url is not null and (t3.is_approval = 0 or (t3.is_approval=1 and t.update_url is NOT NULL))
+      <if test="id != null">
+          and t3.pid = #{id}
+      </if>
+      <if test="tripId != null">
+          and ls.id = #{tripId}
+      </if>
+      <if test="ids!=null">
+          AND t.id in
+          <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+              #{item}
+          </foreach>
+      </if>
       order by t.create_time desc
   </select>
 

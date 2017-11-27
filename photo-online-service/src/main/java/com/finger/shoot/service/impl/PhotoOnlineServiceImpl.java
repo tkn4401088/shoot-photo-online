@@ -87,4 +87,9 @@ public class PhotoOnlineServiceImpl implements PhotoOnlineService {
     public int updateAccessNumByOrderId(Long orderId) {
         return photoOnlineMapper.updateAccessNumByOrderId(orderId);
     }
+
+    @Override
+    public PhotoOnline judgeIsOnlineTour(PhotoOnline photoOnline){
+        return photoOnlineMapper.judgeIsOnlineTour(photoOnline);
+    }
 }

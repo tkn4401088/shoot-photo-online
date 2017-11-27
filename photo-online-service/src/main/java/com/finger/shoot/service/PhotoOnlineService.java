@@ -73,5 +73,12 @@ public interface PhotoOnlineService {
 	 * @return
      */
 	int updateAccessNumByOrderId(Long orderId);
+
+	/**
+	 * 校验是否是直播团
+	 * @param photoOnline
+	 * @return
+	 */
+	PhotoOnline judgeIsOnlineTour(PhotoOnline photoOnline);
 }
 

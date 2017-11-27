@@ -201,4 +201,19 @@
 		where
 		order_id = #{orderId}
 	</update>
+
+	<!-- 校验 是否是直播团  且  是否需要审核 -->
+	<select id="judgeIsOnlineTour" resultType="com.finger.shoot.entity.PhotoOnline" parameterType="com.finger.shoot.entity.PhotoOnline" >
+		SELECT
+			po.*
+		FROM
+			t_photo_online po
+		LEFT JOIN t_order o ON po.order_id = o.id
+		WHERE po.yn = 1
+		<if test="orderNo != null">
+			AND o.order_no = #{orderNo}
+		</if>
+	</select>
+
+
 </mapper>

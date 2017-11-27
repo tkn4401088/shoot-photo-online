@@ -10,6 +10,8 @@ package com.finger.shoot.entity;
 import com.finger.portal.base.model.PageModel;
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * 直播团设置
  * 
@@ -30,7 +32,9 @@ public class PhotoOnline extends PageModel {
      */
     private Long orderId;
 
-    private String orderNo;
+    @NotNull(message = "订单号必填", groups = {ValidateJudgeIsOnlineTour.class})
+    private String orderNo;  //订单号
+
     /**
      * 直播类型ID       db_column: live_type_id 
      */
@@ -110,8 +114,14 @@ public class PhotoOnline extends PageModel {
      */
     private String QRCode; //地点
     /**
-     * 是否需要审核：1是 2否       db_column: is_approval
+     * 是否需要审核：1是 0否       db_column: is_approval
      */
     private Integer isApproval;
+
+
+    /* ********************** 参数校验类 *******************************/
+    public interface ValidateJudgeIsOnlineTour{
+
+    }
 }
 
