@@ -130,5 +130,7 @@ public class GroupPhoto extends PageModel{
 	//columns END
 
     private List<String> ids;
+
+    private String photographer;
 }
 

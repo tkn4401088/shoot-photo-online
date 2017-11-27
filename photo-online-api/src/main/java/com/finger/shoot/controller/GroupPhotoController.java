@@ -12,6 +12,7 @@ import com.finger.portal.base.util.ResponseModel;
 import com.finger.shoot.entity.GroupPhoto;
 import com.finger.shoot.exception.ParamsCheckFailException;
 import com.finger.shoot.service.GroupPhotoService;
+import com.finger.shoot.utils.BeanUtil;
 import com.finger.shoot.utils.ValidatedUtil;
 import com.finger.shoot.utils.ExceptionPrintUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -51,6 +52,10 @@ public class GroupPhotoController {
 
             List<GroupPhoto> groupPhotos = groupPhotoService.selectGroupPhotos(groupPhoto);
             susResp.setData(groupPhotos);
+
+            susResp.setData(BeanUtil.getListProperties(groupPhotos,
+                    new String[]{"id","thumbnailUrl","photographer"},
+                    false));
         }catch (ParamsCheckFailException e){
             log.error(ExceptionPrintUtil.getMessage(e));
             e.printStackTrace();

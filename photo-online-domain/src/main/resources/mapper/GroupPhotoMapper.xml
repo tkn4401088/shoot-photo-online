@@ -44,178 +44,23 @@
   </select>
 
   <select id="selectGroupPhotos" resultMap="GroupPhotoResultMap" parameterType="com.finger.shoot.entity.GroupPhoto" >
-    select
-     <include refid="groupPhoto_columns" />
-    from t_group_photo where is_delete = 1 and yn = 1
-          <if test="ids != null">
-              AND id in
-              <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
-                  ${item}
-              </foreach>
-          </if>
-        <if test="id != null">
-          AND id = #{id}
-        </if>
-        <if test="groupId != null">
-          AND group_id = #{groupId}
-        </if>
-        <if test="cameraBaseUrl != null">
-          AND camera_base_url = #{cameraBaseUrl}
-        </if>
-        <if test="baseUrl != null">
-          AND base_url = #{baseUrl}
-        </if>
-        <if test="updateUrl != null">
-          AND update_url = #{updateUrl}
-        </if>
-        <if test="thumbnailUrl != null">
-          AND thumbnail_url = #{thumbnailUrl}
-        </if>
-        <if test="filename != null">
-          AND filename = #{filename}
-        </if>
-        <if test="status != null">
-          AND STATUS = #{status}
-        </if>
-        <if test="creator != null">
-          AND creator = #{creator}
-        </if>
-        <if test="createTime != null">
-          AND create_time = #{createTime}
-        </if>
-        <if test="filesize != null">
-          AND filesize = #{filesize}
-        </if>
-        <if test="type != null">
-          AND type = #{type}
-        </if>
-        <if test="yn != null">
-          AND yn = #{yn}
-        </if>
-        <if test="isDelete != null">
-          AND is_delete = #{isDelete}
-        </if>
-        <if test="isDownload != null">
-          AND is_download = #{isDownload}
-        </if>
-        <if test="faceStatus != null">
-          AND face_status = #{faceStatus}
-        </if>
-        <if test="cameraUrlSource != null">
-          AND camera_url_source = #{cameraUrlSource}
-        </if>
-        <if test="baseUrlSource != null">
-          AND base_url_source = #{baseUrlSource}
-        </if>
-        <if test="score != null">
-          AND score = #{score}
-        </if>
-        <if test="cameraRawUrl != null">
-          AND camera_raw_url = #{cameraRawUrl}
-        </if>
-        <if test="isDeleteChoice != null">
-          AND is_delete_choice = #{isDeleteChoice}
-        </if>
-        <if test="isChoice != null">
-          AND is_choice = #{isChoice}
-        </if>
-        <if test="isMobile != null">
-          AND is_mobile = #{isMobile}
-        </if>
-        <if test="choiceTime != null">
-          AND choice_time = #{choiceTime}
-        </if>
-        <if test="baseFilesize != null">
-          AND base_filesize = #{baseFilesize}
-        </if>
-        <if test="updateFilesize != null">
-          AND update_filesize = #{updateFilesize}
-        </if>
+      select
+      <include refid="groupPhoto_columns" />,t1.photographer
+      from t_group_photo t left join (select id as sid,order_no,photographer from t_shoot_group) t1 on t.group_id = t1.sid
+      left join (select id as oid,order_no from t_order) t2 on t1.order_no = t2.order_no
+      left join (select id as pid,order_id from t_photo_online) t3 on t3.order_id = t2.oid
+      where t.is_delete = 1 and t.yn = 1 and t3.pid = #{id} and thumbnail_url is not null
+      order by t.create_time desc
   </select>
 
   <select id="selectPageGroupPhotos" resultMap="GroupPhotoResultMap" parameterType="com.finger.shoot.entity.GroupPhoto" >
     select
-     <include refid="groupPhoto_columns" />
-    from t_group_photo where is_delete = 1 and yn = 1
-
-        <if test="id != null">
-          AND id = #{id}
-        </if>
-        <if test="groupId != null">
-          AND group_id = #{groupId}
-        </if>
-        <if test="cameraBaseUrl != null">
-          AND camera_base_url = #{cameraBaseUrl}
-        </if>
-        <if test="baseUrl != null">
-          AND base_url = #{baseUrl}
-        </if>
-        <if test="updateUrl != null">
-          AND update_url = #{updateUrl}
-        </if>
-        <if test="thumbnailUrl != null">
-          AND thumbnail_url = #{thumbnailUrl}
-        </if>
-        <if test="filename != null">
-          AND filename = #{filename}
-        </if>
-        <if test="status != null">
-          AND STATUS = #{status}
-        </if>
-        <if test="creator != null">
-          AND creator = #{creator}
-        </if>
-        <if test="createTime != null">
-          AND create_time = #{createTime}
-        </if>
-        <if test="filesize != null">
-          AND filesize = #{filesize}
-        </if>
-        <if test="type != null">
-          AND type = #{type}
-        </if>
-        <if test="yn != null">
-          AND yn = #{yn}
-        </if>
-        <if test="isDelete != null">
-          AND is_delete = #{isDelete}
-        </if>
-        <if test="isDownload != null">
-          AND is_download = #{isDownload}
-        </if>
-        <if test="faceStatus != null">
-          AND face_status = #{faceStatus}
-        </if>
-        <if test="cameraUrlSource != null">
-          AND camera_url_source = #{cameraUrlSource}
-        </if>
-        <if test="baseUrlSource != null">
-          AND base_url_source = #{baseUrlSource}
-        </if>
-        <if test="score != null">
-          AND score = #{score}
-        </if>
-        <if test="cameraRawUrl != null">
-          AND camera_raw_url = #{cameraRawUrl}
-        </if>
-        <if test="isDeleteChoice != null">
-          AND is_delete_choice = #{isDeleteChoice}
-        </if>
-        <if test="isChoice != null">
-          AND is_choice = #{isChoice}
-        </if>
-        <if test="isMobile != null">
-          AND is_mobile = #{isMobile}
-        </if>
-        <if test="choiceTime != null">
-          AND choice_time = #{choiceTime}
-        </if>
-        <if test="baseFilesize != null">
-          AND base_filesize = #{baseFilesize}
-        </if>
-        <if test="updateFilesize != null">
-          AND update_filesize = #{updateFilesize}
-        </if>
+     <include refid="groupPhoto_columns" />,t1.photographer
+      from t_group_photo t left join (select id as sid,order_no,photographer from t_shoot_group) t1 on t.group_id = t1.sid
+      left join (select id as oid,order_no from t_order) t2 on t1.order_no = t2.order_no
+      left join (select id as pid,order_id from t_photo_online) t3 on t3.order_id = t2.oid
+      where t.is_delete = 1 and t.yn = 1 and t3.pid = #{id} and thumbnail_url is not null
+      order by t.create_time desc
   </select>
 
 </mapper>
