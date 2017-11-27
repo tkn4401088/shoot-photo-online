@@ -21,11 +21,12 @@
 	  <result column="forward_num" property="forwardNum"/>
       <result column="created_time" property="createdTime"/>
       <result column="updated_time" property="updatedTime"/>
+	  <result column="is_approval" property="isApproval"/>
   </resultMap>
 
   <sql id="photoOnlineConf_columns">
       id,live_type_id,live_type_name,live_name,order_id,cover_img,banner_img,open_time,start_time,end_time,open_auth,access_pwd,introduce,
-      forward_num,access_num,created_time,updated_time
+      forward_num,access_num,created_time,updated_time,is_approval
   </sql>
 
   <!-- 根据订单ID查询直播团配置 -->
@@ -120,6 +121,9 @@
 		  <if test="updatedTime != null">
 			updated_time,
 		  </if>
+		<if test="isApproval != null">
+			is_approval,
+		</if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
 		  <if test="id != null">
@@ -167,6 +171,9 @@
 		  <if test="updatedTime != null">
 			#{updatedTime},
 		  </if>
+			<if test="isApproval != null">
+				#{isApproval},
+			</if>
     </trim>
   </insert>
 

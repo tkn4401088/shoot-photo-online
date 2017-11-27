@@ -109,5 +109,9 @@ public class PhotoOnline extends PageModel {
      * 创建时间       db_column: created_time
      */
     private String QRCode; //地点
+    /**
+     * 是否需要审核：1是 2否       db_column: is_approval
+     */
+    private Integer isApproval;
 }
 

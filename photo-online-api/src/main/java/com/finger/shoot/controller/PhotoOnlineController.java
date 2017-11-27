@@ -127,7 +127,7 @@ public class PhotoOnlineController {
                     retPhotoOnline.setQRCode(QRCode);
                 }
                 susResp.setData(BeanUtil.getProperties(retPhotoOnline,
-                        new String[]{"QRCode","openTime","endTime","openAuth","accessPwd","liveTypeId","liveTypeName","liveName", "coverImg","bannerImg", "startTime","photoNum","accessNum","forwardNum", "introduce"},
+                        new String[]{"isApproval","QRCode","openTime","endTime","openAuth","accessPwd","liveTypeId","liveTypeName","liveName", "coverImg","bannerImg", "startTime","photoNum","accessNum","forwardNum", "introduce"},
                         false));
             }
         }catch (ParamsCheckFailException e){
@@ -161,7 +161,7 @@ public class PhotoOnlineController {
                 photoOnlineService.updateAccessNumByOrderId(retPhotoOnline.getOrderId());
 
                 susResp.setData(BeanUtil.getProperties(retPhotoOnline,
-                        new String[]{"orderNo","liveName", "coverImg","bannerImg", "startTime","photoNum","accessNum","forwardNum", "introduce","openAuth","accessPwd","address"},
+                        new String[]{"isApproval","orderNo","liveName", "coverImg","bannerImg", "startTime","photoNum","accessNum","forwardNum", "introduce","openAuth","accessPwd","address"},
                         false));
             }
         }catch (ParamsCheckFailException e){
@@ -191,7 +191,7 @@ public class PhotoOnlineController {
             List<PhotoOnline> retPhotoOnline = photoOnlineService.selectPagePhotoOnline(photoOnline);
             if(null != retPhotoOnline) {
                 susResp.setData(BeanUtil.getListProperties(retPhotoOnline,
-                        new String[]{"id","orderId","curPage","pageCount","rowsCount","liveName", "coverImg","photoNum","accessNum","forwardNum",
+                        new String[]{"isApproval","id","orderId","curPage","pageCount","rowsCount","liveName", "coverImg","photoNum","accessNum","forwardNum",
                                 "bannerImg","startTime", "openAuth","accessPwd","introduce","address"},
                         false));
             }
