@@ -179,7 +179,7 @@
 
     <!-- 查询所有有效的直播团 -->
 	<select id="selectPagePhotoOnline" resultMap="PhotoOnlineResultMap" parameterType="com.finger.shoot.entity.PhotoOnline">
-		select t2.id,t1.id as orderId,t2.cover_img as coverImg,t2.banner_img as bannerImg,t2.live_name as liveName,
+		select t2.id,t1.id as orderId,t2.is_approval as isApproval,t2.cover_img as coverImg,t2.banner_img as bannerImg,t2.live_name as liveName,
 		t2.access_num as accessNum,t2.forward_num as forwardNum,t2.open_auth as openAuth,access_pwd as accessPwd,
 		(select ls.`journey_name` from line_sight ls where ls.order_id=t1.id limit 1) as address,
 		ifnull((select count(*) from t_shoot_group tsg inner join t_group_photo tgp on tsg.id = tgp.group_id
