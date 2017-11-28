@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: @profiles.active@
+    active: sit
   http:
     encoding:
       charset: UTF-8
@@ -71,7 +71,7 @@ spring:
   datasource:
         name: shoot
         driverClassName: com.mysql.jdbc.Driver
-        url: jdbc:mysql://115.29.7.193:3306/shoot_0728?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true
+        url: jdbc:mysql://118.31.16.15:3306/finger-shoot?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true
         type: com.alibaba.druid.pool.DruidDataSource
         maxActive: 20
         initialSize: 1
@@ -85,8 +85,8 @@ spring:
         testOnReturn: false
         poolPreparedStatements: true
         maxOpenPreparedStatements: 20
-        username: shoot
-        password: shoot
+        username: zjdy
+        password: finger.123456
         filters: log4j
   redis:
        host: 115.29.7.193
