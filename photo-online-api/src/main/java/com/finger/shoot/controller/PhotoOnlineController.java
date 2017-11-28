@@ -128,7 +128,7 @@ public class PhotoOnlineController {
                     retPhotoOnline.setQRCode(QRCode);
                 }
                 susResp.setData(BeanUtil.getProperties(retPhotoOnline,
-                        new String[]{"isApproval","QRCode","openTime","endTime","openAuth","accessPwd","liveTypeId","liveTypeName","liveName", "coverImg","bannerImg", "startTime","photoNum","accessNum","forwardNum", "introduce"},
+                        new String[]{"id", "isApproval","QRCode","openTime","endTime","openAuth","accessPwd","liveTypeId","liveTypeName","liveName", "coverImg","bannerImg", "startTime","photoNum","accessNum","forwardNum", "introduce"},
                         false));
             }
         }catch (ParamsCheckFailException e){

@@ -4,7 +4,7 @@
 	<jmxConfigurator />
 	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<FileNamePattern>logs/shoot-report.%d{yyyy-MM-dd}.log</FileNamePattern>
+			<FileNamePattern>logs/shoot-photo-online.%d{yyyy-MM-dd}.log</FileNamePattern>
 			<MaxHistory>60</MaxHistory>
 		</rollingPolicy>
 		<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
