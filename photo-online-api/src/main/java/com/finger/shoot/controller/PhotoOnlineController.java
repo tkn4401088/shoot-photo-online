@@ -26,6 +26,7 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -58,6 +59,9 @@ public class PhotoOnlineController {
 
     @Autowired
     private StaticDataService staticDataService;
+
+    @Value("${shoot.online-web-site.url}")
+    private String onlineWebSiteUrl;
 
 
     @ApiOperation(value="保存及修改直播团设置")
@@ -124,9 +128,9 @@ public class PhotoOnlineController {
             ValidatedUtil.validatedParams(result);
             PhotoOnline retPhotoOnline = photoOnlineService.selectByOrderId(photoOnline.getOrderId());
             if(null != retPhotoOnline) {
-                retPhotoOnline.setUrl(request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/"+retPhotoOnline.getId());
+                retPhotoOnline.setUrl(onlineWebSiteUrl + retPhotoOnline.getId());
                 String  QRCode = createImage(retPhotoOnline.getUrl());
-                    retPhotoOnline.setQRCode(QRCode);
+                retPhotoOnline.setQRCode(QRCode);
                 susResp.setData(BeanUtil.getProperties(retPhotoOnline,
                         new String[]{"url","id", "isApproval","QRCode","openTime","endTime","openAuth","accessPwd","liveTypeId","liveTypeName","liveName", "coverImg","bannerImg", "startTime","photoNum","accessNum","forwardNum", "introduce"},
                         false));
