@@ -8,7 +8,6 @@
 package com.finger.shoot.controller;
 
 import com.finger.portal.base.util.ResponseModel;
-
 import com.finger.shoot.common.Constants;
 import com.finger.shoot.common.FileObject;
 import com.finger.shoot.configuration.OssBeanConfiguration;
@@ -22,7 +21,10 @@ import com.finger.shoot.utils.BeanUtil;
 import com.finger.shoot.utils.ImageUtils;
 import com.finger.shoot.utils.ValidatedUtil;
 import com.finger.shoot.utils.ExceptionPrintUtil;
+import com.finger.shoot.utils.VideoUtils;
+
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
@@ -99,7 +101,6 @@ public class PhotoOnlineCustomController {
         try {
             //校验参数
             ValidatedUtil.validatedParams(result);
-
             //生成拼图
             if(1== photoOnlineCustom.getWorksType()){
                 String[] photoIds = photoOnlineCustom.getPhotoIds();
@@ -130,10 +131,38 @@ public class PhotoOnlineCustomController {
                 }else{
                     return new ResponseModel(Constants.ERR_CODE_1005, Constants.ERR_MSG_MAP.get(Constants.ERR_CODE_1005));
                 }
+             //制作小视频
+            }else if(2==photoOnlineCustom.getWorksType()){
+            	 String[] photoIds = photoOnlineCustom.getPhotoIds();
+                 List<String> ids = Arrays.asList(photoIds);
+                 GroupPhoto groupPhoto = new GroupPhoto();
+                 groupPhoto.setIds(ids);
+                 List<GroupPhoto> photoList = groupPhotoService.selectGroupPhotos(groupPhoto);
+
+                 if(null == photoList || photoList.size() == 0){
+                     return new ResponseModel(Constants.ERR_CODE_1004, Constants.ERR_MSG_MAP.get(Constants.ERR_CODE_1004));
+                 }
+
+                 List<String> urlList = new ArrayList<>();
+                 for(GroupPhoto gp : photoList){
+                     if(!StringUtils.isEmpty(gp.getThumbnailUrl())){
+                         urlList.add(gp.getThumbnailUrl());
+                     }
+                 }
+                 if(urlList.size() > 0 ){
+                     FileObject fileObject = VideoUtils.imageToVideo(urlList, photoOnlineCustom.getOrderId(), ossBeanConfiguration);
+                     if(null == fileObject){
+                         return new ResponseModel(Constants.ERR_CODE_1005, Constants.ERR_MSG_MAP.get(Constants.ERR_CODE_1005));
+                     }
+                     photoOnlineCustom.setUrl(fileObject.getUrl());
+                     photoOnlineCustom.setFilesize(fileObject.getFileSize());
+                     photoOnlineCustom.setObjects(photoOnlineCustom.getPhotoIds().toString());
+                 }else{
+                     return new ResponseModel(Constants.ERR_CODE_1005, Constants.ERR_MSG_MAP.get(Constants.ERR_CODE_1005));
+                 }
             }else{
                 return new ResponseModel(Constants.ERR_CODE_1003, Constants.ERR_MSG_MAP.get(Constants.ERR_CODE_1003));
             }
-
             int flag = photoOnlineCustomService.insert(photoOnlineCustom);
             if(flag <=0) {
                 susResp = new ResponseModel(Constants.ERR_CODE_500, Constants.ERR_MSG_MAP.get(Constants.ERR_CODE_500));
@@ -155,5 +184,4 @@ public class PhotoOnlineCustomController {
         }
         return susResp;
     }
-
 }

@@ -116,7 +116,18 @@
 			<artifactId>spring-boot-starter-data-redis</artifactId>
 			<version>1.4.0.RELEASE</version>
 		</dependency>
-
+		<!-- 在线视频制作  -->
+        <dependency>
+		  <groupId>org</groupId>
+		  <artifactId>jim2mov</artifactId>
+		  <version>1.0.0</version>
+		  <classifier>zhangbo</classifier>
+		</dependency>
+		<dependency>
+		  <groupId>com</groupId>
+		  <artifactId>jmf</artifactId>
+		  <version>1.0.0</version>
+		</dependency>
 		<!--mongodb依赖 -->
 		<!--<dependency>
 			<groupId>org.springframework.boot</groupId>
