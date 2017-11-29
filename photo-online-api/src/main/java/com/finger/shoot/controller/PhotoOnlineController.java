@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.*;
 import sun.misc.BASE64Encoder;
 
 import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -116,19 +117,18 @@ public class PhotoOnlineController {
     @ApiImplicitParams({ @ApiImplicitParam(paramType = "query", dataType = "Long", name = "orderId", value = "订单ID", required = true) })
     @ApiImplicitParam(name = "photoOnline", value = "直播团配置对象", required = false, dataType = "PhotoOnline")
     @RequestMapping(value = "/selectPhotoOnlineByOrderId", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public Object selectPhotoOnlineByOrderId(@RequestBody PhotoOnline photoOnline, BindingResult result){
+    public Object selectPhotoOnlineByOrderId(@RequestBody PhotoOnline photoOnline, BindingResult result,HttpServletRequest request){
         ResponseModel susResp = ResponseModel.getSuccessResponseModel();
         try {
             //校验参数
             ValidatedUtil.validatedParams(result);
             PhotoOnline retPhotoOnline = photoOnlineService.selectByOrderId(photoOnline.getOrderId());
             if(null != retPhotoOnline) {
-                if(null!=photoOnline.getUrl() && !"".equals(photoOnline.getUrl())){
-                    String  QRCode = createImage(photoOnline.getUrl());
+                retPhotoOnline.setUrl(request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/"+retPhotoOnline.getId());
+                String  QRCode = createImage(retPhotoOnline.getUrl());
                     retPhotoOnline.setQRCode(QRCode);
-                }
                 susResp.setData(BeanUtil.getProperties(retPhotoOnline,
-                        new String[]{"id", "isApproval","QRCode","openTime","endTime","openAuth","accessPwd","liveTypeId","liveTypeName","liveName", "coverImg","bannerImg", "startTime","photoNum","accessNum","forwardNum", "introduce"},
+                        new String[]{"url","id", "isApproval","QRCode","openTime","endTime","openAuth","accessPwd","liveTypeId","liveTypeName","liveName", "coverImg","bannerImg", "startTime","photoNum","accessNum","forwardNum", "introduce"},
                         false));
             }
         }catch (ParamsCheckFailException e){
