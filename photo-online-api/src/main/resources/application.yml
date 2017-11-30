@@ -61,7 +61,9 @@ server:
   context-path: ${name:/shoot-photo-online}
   port: ${port:8095}
   domain: http://localhost:8095/shoot-photo-online/
-
+shoot:
+  online-web-site:
+    url: http://photo-online.fingercrm.cn/
 ---
 #uat环境
 spring:
@@ -109,7 +111,9 @@ server:
   context-path: ${name:/shoot-photo-online}
   port: ${port:8095}
   domain: http://localhost:8095/shoot-photo-online/
-
+shoot:
+  online-web-site:
+    url: http://photo-online.fingercrm.cn/
 
 ---
 #production环境
