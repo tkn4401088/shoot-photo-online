@@ -1,0 +1,15 @@
+/*/logs
+/logs
+/logs/
+/*/target
+/target
+/out/*
+.idea/
+.settings/
+.classpath
+.project
+*.epoch
+*.iml
+*.lck
+/target/
+

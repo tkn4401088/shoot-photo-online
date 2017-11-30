@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.finger.shoot.mapper.VisitorsMapper" >
+
+  <resultMap id="VisitorsResultMap" type="com.finger.shoot.entity.Visitors" >
+      <result column="id" property="id"/>
+      <result column="nick_name" property="nickName"/>
+      <result column="head_img" property="headImg"/>
+      <result column="visitor_src" property="visitorSrc"/>
+      <result column="open_id" property="openId"/>
+      <result column="last_access_time" property="lastAccessTime"/>
+      <result column="created_time" property="createdTime"/>
+  </resultMap>
+
+  <sql id="visitors_columns">
+      id,nick_name,head_img,visitor_src,open_id,last_access_time,created_time
+  </sql>
+
+  <select id="selectById" resultMap="VisitorsResultMap" parameterType="long" >
+    select 
+      <include refid="visitors_columns" />
+    from t_visitors
+      where 
+				id = #{id}
+  </select>
+
+  <select id="selectVisitorss" resultMap="VisitorsResultMap" parameterType="com.finger.shoot.entity.Visitors" >
+    select
+     <include refid="visitors_columns" />
+    from t_visitors
+    <where>
+        <if test="id != null">
+          AND id = #{id}
+        </if>
+        <if test="nickName != null">
+          AND nick_name = #{nickName}
+        </if>
+        <if test="headImg != null">
+          AND head_img = #{headImg}
+        </if>
+        <if test="visitorSrc != null">
+          AND visitor_src = #{visitorSrc}
+        </if>
+        <if test="openId != null">
+          AND open_id = #{openId}
+        </if>
+        <if test="lastAccessTime != null">
+          AND last_access_time = #{lastAccessTime}
+        </if>
+        <if test="createdTime != null">
+          AND created_time = #{createdTime}
+        </if>
+    </where>
+  </select>
+
+  <select id="selectPageVisitorss" resultMap="VisitorsResultMap" parameterType="com.finger.shoot.entity.Visitors" >
+    select
+     <include refid="visitors_columns" />
+    from t_visitors
+      <where>
+        <if test="id != null">
+          AND id = #{id}
+        </if>
+        <if test="nickName != null">
+          AND nick_name = #{nickName}
+        </if>
+        <if test="headImg != null">
+          AND head_img = #{headImg}
+        </if>
+        <if test="visitorSrc != null">
+          AND visitor_src = #{visitorSrc}
+        </if>
+        <if test="openId != null">
+          AND open_id = #{openId}
+        </if>
+        <if test="lastAccessTime != null">
+          AND last_access_time = #{lastAccessTime}
+        </if>
+        <if test="createdTime != null">
+          AND created_time = #{createdTime}
+        </if>
+      </where>
+  </select>
+
+  <delete id="deleteById" parameterType="long" >
+    delete from t_visitors
+      where 
+				id = #{id}
+  </delete>
+
+  <insert id="insert" parameterType="com.finger.shoot.entity.Visitors" keyProperty="id">
+    insert into t_visitors
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+		  <if test="id != null">
+			id,
+		  </if>
+		  <if test="nickName != null">
+			nick_name,
+		  </if>
+		  <if test="headImg != null">
+			head_img,
+		  </if>
+		  <if test="visitorSrc != null">
+			visitor_src,
+		  </if>
+		  <if test="openId != null">
+			open_id,
+		  </if>
+		  <if test="lastAccessTime != null">
+			last_access_time,
+		  </if>
+		  <if test="createdTime != null">
+			created_time,
+		  </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+		  <if test="id != null">
+			#{id},
+		  </if>
+		  <if test="nickName != null">
+			#{nickName},
+		  </if>
+		  <if test="headImg != null">
+			#{headImg},
+		  </if>
+		  <if test="visitorSrc != null">
+			#{visitorSrc},
+		  </if>
+		  <if test="openId != null">
+			#{openId},
+		  </if>
+		  <if test="lastAccessTime != null">
+			#{lastAccessTime},
+		  </if>
+		  <if test="createdTime != null">
+			#{createdTime},
+		  </if>
+    </trim>
+  </insert>
+
+  <insert id="batchInsert" parameterType="com.finger.shoot.entity.Visitors" >
+    insert into t_visitors ( id,nick_name,head_img,visitor_src,open_id,last_access_time,created_time)
+    values
+    <foreach collection="list" item="item" index="index" separator="," >
+      (#{item.id},#{item.nickName},#{item.headImg},#{item.visitorSrc},#{item.openId},#{item.lastAccessTime},#{item.createdTime})
+    </foreach>
+  </insert>
+
+
+  <update id="updateById" parameterType="com.finger.shoot.entity.Visitors" >
+    update t_visitors
+    <set >
+      <trim prefix="" suffix="" suffixOverrides="," >
+			<if test="id != null">
+			  id = #{id},
+			</if>
+			<if test="nickName != null">
+			  nick_name = #{nickName},
+			</if>
+			<if test="headImg != null">
+			  head_img = #{headImg},
+			</if>
+			<if test="visitorSrc != null">
+			  visitor_src = #{visitorSrc},
+			</if>
+			<if test="openId != null">
+			  open_id = #{openId},
+			</if>
+			<if test="lastAccessTime != null">
+			  last_access_time = #{lastAccessTime},
+			</if>
+			<if test="createdTime != null">
+			  created_time = #{createdTime},
+			</if>
+      </trim>
+    </set>
+      where 
+	 			id = #{id}
+  </update>
+
+</mapper>

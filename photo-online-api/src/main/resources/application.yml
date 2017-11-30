@@ -1,0 +1,122 @@
+spring:
+  profiles:
+    active: sit
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+---
+#sit环境
+spring:
+  profiles: sit
+  application:
+    name: shoot-photo-online
+  datasource:
+      name: shoot
+      driverClassName: com.mysql.jdbc.Driver
+      url: jdbc:mysql://118.31.16.15:3306/finger-shoot?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true
+      type: com.alibaba.druid.pool.DruidDataSource
+      maxActive: 20
+      initialSize: 1
+      maxWait: 60000
+      minIdle: 1
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: select 'x'
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true
+      maxOpenPreparedStatements: 20
+      username: zjdy
+      password: finger.123456
+      filters: log4j
+  redis:
+       host: 118.31.16.15
+       port: 27199
+       password: Jdytrip@0626!#$
+       timeout: 30000
+       pool:
+         max-active: 1000
+         max-wait: -1
+         max-idle: 100
+         min-idle: 10
+  data:
+      mongodb:
+          host: 47.96.162.9
+          port: 20000
+          #username: dev_xxx
+          #password: dev_xxxx
+          database: shoot_sit
+  oss:
+     pic: zjwk-uat-online
+     jscss: zjwk-uat-online
+     endpoint: oss-cn-shanghai.aliyuncs.com
+     key: Tib7HIJDR2nQz618
+     secret: SZa299lYI4VqShB71yUYgH7xJkNz1G
+     url: http://img.test.fingercrm.cn/
+server:
+  context-path: ${name:/shoot-photo-online}
+  port: ${port:8095}
+  domain: http://localhost:8095/shoot-photo-online/
+shoot:
+  online-web-site:
+    url: http://photo-online.fingercrm.cn/
+---
+#uat环境
+spring:
+  profiles: uat
+  application:
+    name: shoot-photo-online
+  datasource:
+        name: shoot
+        driverClassName: com.mysql.jdbc.Driver
+        url: jdbc:mysql://118.31.16.15:3306/finger-shoot?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true
+        type: com.alibaba.druid.pool.DruidDataSource
+        maxActive: 20
+        initialSize: 1
+        maxWait: 60000
+        minIdle: 1
+        timeBetweenEvictionRunsMillis: 60000
+        minEvictableIdleTimeMillis: 300000
+        validationQuery: select 'x'
+        testWhileIdle: true
+        testOnBorrow: false
+        testOnReturn: false
+        poolPreparedStatements: true
+        maxOpenPreparedStatements: 20
+        username: zjdy
+        password: finger.123456
+        filters: log4j
+  redis:
+       host: 115.29.7.193
+       port: 27199
+       password: Jdytrip@0626!#$
+       timeout: 30000
+       pool:
+         max-active: 1000
+         max-wait: -1
+         max-idle: 100
+         min-idle: 10
+  data:
+      mongodb:
+          host: 120.26.37.73
+          port: 20000
+          #username: dev_xxx
+          #password: dev_xxxx
+          database: shoot_uat
+server:
+  context-path: ${name:/shoot-photo-online}
+  port: ${port:8095}
+  domain: http://localhost:8095/shoot-photo-online/
+shoot:
+  online-web-site:
+    url: http://photo-online.fingercrm.cn/
+
+---
+#production环境
+
+
+

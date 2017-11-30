@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.finger.shoot.mapper.GroupPhotoMapper" >
+
+  <resultMap id="GroupPhotoResultMap" type="com.finger.shoot.entity.GroupPhoto" >
+      <result column="id" property="id"/>
+      <result column="group_id" property="groupId"/>
+      <result column="camera_base_url" property="cameraBaseUrl"/>
+      <result column="base_url" property="baseUrl"/>
+      <result column="update_url" property="updateUrl"/>
+      <result column="thumbnail_url" property="thumbnailUrl"/>
+      <result column="filename" property="filename"/>
+      <result column="STATUS" property="status"/>
+      <result column="creator" property="creator"/>
+      <result column="create_time" property="createTime"/>
+      <result column="filesize" property="filesize"/>
+      <result column="type" property="type"/>
+      <result column="yn" property="yn"/>
+      <result column="is_delete" property="isDelete"/>
+      <result column="is_download" property="isDownload"/>
+      <result column="face_status" property="faceStatus"/>
+      <result column="camera_url_source" property="cameraUrlSource"/>
+      <result column="base_url_source" property="baseUrlSource"/>
+      <result column="score" property="score"/>
+      <result column="camera_raw_url" property="cameraRawUrl"/>
+      <result column="is_delete_choice" property="isDeleteChoice"/>
+      <result column="is_choice" property="isChoice"/>
+      <result column="is_mobile" property="isMobile"/>
+      <result column="choice_time" property="choiceTime"/>
+      <result column="base_filesize" property="baseFilesize"/>
+      <result column="update_filesize" property="updateFilesize"/>
+      <result column="tripId" property="tripId"/>
+      <result column="journeyName" property="journeyName"/>
+  </resultMap>
+
+  <sql id="groupPhoto_columns">
+      id,group_id,camera_base_url,base_url,update_url,thumbnail_url,filename,STATUS,creator,create_time,filesize,type,yn,is_delete,is_download,face_status,camera_url_source,base_url_source,score,camera_raw_url,is_delete_choice,is_choice,is_mobile,choice_time,base_filesize,update_filesize
+  </sql>
+
+  <sql id="groupPhoto_columns_t">
+      t.id,t.group_id,t.camera_base_url,t.base_url,t.update_url,t.thumbnail_url,t.filename,t.STATUS,t.creator,t.create_time,t.filesize,
+      t.type,t.yn,t.is_delete,t.is_download,t.face_status,t.camera_url_source,t.base_url_source,t.score,t.camera_raw_url,t.is_delete_choice,
+      t.is_choice,t.is_mobile,t.choice_time,t.base_filesize,t.update_filesize
+  </sql>
+
+  <select id="selectById" resultMap="GroupPhotoResultMap" parameterType="long" >
+    select 
+      <include refid="groupPhoto_columns" />
+    from t_group_photo
+      where 
+				id = #{id}
+  </select>
+
+  <select id="selectGroupPhotos" resultMap="GroupPhotoResultMap" parameterType="com.finger.shoot.entity.GroupPhoto" >
+      select
+      <include refid="groupPhoto_columns_t" />,t1.photographer, ls.id as tripId, ls.journey_name as journeyName
+      from t_group_photo t
+      left join (select id as sid,order_no,photographer,photographer_id from t_shoot_group) t1 on t.group_id = t1.sid
+      left join (select id as oid,order_no from t_order) t2 on t1.order_no = t2.order_no
+      left join (select id as pid,order_id,is_approval from t_photo_online) t3 on t3.order_id = t2.oid
+      left join line_sight ls ON ls.order_id = t3.order_id
+      left join t_journey_photoer jp ON (jp.photographer_id = t1.photographer_id AND jp.shoot_journey_id = ls.id)
+      where t.is_delete = 1 and t.yn = 1  and thumbnail_url is not null and (t3.is_approval = 0 or (t3.is_approval=1 and t.update_url is NOT NULL))
+      <if test="id != null">
+          and t3.pid = #{id}
+      </if>
+      <if test="tripId != null">
+          and ls.id = #{tripId}
+      </if>
+      <if test="ids!=null">
+          AND t.id in
+          <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+              #{item}
+          </foreach>
+      </if>
+      order by t.create_time desc
+  </select>
+
+  <select id="selectPageGroupPhotos" resultMap="GroupPhotoResultMap" parameterType="com.finger.shoot.entity.GroupPhoto" >
+    select
+     <include refid="groupPhoto_columns" />,t1.photographer
+      from t_group_photo t left join (select id as sid,order_no,photographer from t_shoot_group) t1 on t.group_id = t1.sid
+      left join (select id as oid,order_no from t_order) t2 on t1.order_no = t2.order_no
+      left join (select id as pid,order_id from t_photo_online) t3 on t3.order_id = t2.oid
+      where t.is_delete = 1 and t.yn = 1 and t3.pid = #{id} and thumbnail_url is not null
+      order by t.create_time desc
+  </select>
+
+</mapper>

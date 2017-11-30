@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.finger.shoot.mapper.PhotoOnlineCustomMapper" >
+
+  <resultMap id="PhotoOnlineCustomResultMap" type="com.finger.shoot.entity.PhotoOnlineCustom" >
+      <result column="id" property="id"/>
+      <result column="v_id" property="vid"/>
+      <result column="order_id" property="orderId"/>
+      <result column="works_type" property="worksType"/>
+      <result column="url" property="url"/>
+      <result column="filesize" property="filesize"/>
+      <result column="access_nums" property="accessNums"/>
+      <result column="objects" property="objects"/>
+      <result column="created_time" property="createdTime"/>
+  </resultMap>
+
+  <sql id="photoOnlineCustom_columns">
+      id,v_id,order_id,works_type,url,filesize,access_nums,objects,created_time
+  </sql>
+
+  <select id="selectById" resultMap="PhotoOnlineCustomResultMap" parameterType="java.lang.Long" >
+    select 
+      <include refid="photoOnlineCustom_columns" />
+    from t_photo_online_custom
+      where 
+				id = #{id}
+  </select>
+
+  <delete id="deleteById" parameterType="java.lang.Long" >
+    delete from t_photo_online_custom
+      where 
+				id = #{id}
+  </delete>
+
+  <insert id="insert" parameterType="com.finger.shoot.entity.PhotoOnlineCustom" keyProperty="id">
+    insert into t_photo_online_custom
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+		  <if test="id != null">
+			id,
+		  </if>
+		  <if test="vid != null">
+			v_id,
+		  </if>
+        <if test="orderId != null">
+            order_id,
+        </if>
+		  <if test="worksType != null">
+			works_type,
+		  </if>
+		  <if test="url != null">
+			url,
+		  </if>
+		  <if test="filesize != null">
+			filesize,
+		  </if>
+		  <if test="accessNums != null">
+			access_nums,
+		  </if>
+		  <if test="objects != null">
+			objects,
+		  </if>
+		  <if test="createdTime != null">
+			created_time,
+		  </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+		  <if test="id != null">
+			#{id},
+		  </if>
+		  <if test="vid != null">
+			#{vid},
+		  </if>
+        <if test="orderId != null">
+            #{orderId},
+        </if>
+		  <if test="worksType != null">
+			#{worksType},
+		  </if>
+		  <if test="url != null">
+			#{url},
+		  </if>
+		  <if test="filesize != null">
+			#{filesize},
+		  </if>
+		  <if test="accessNums != null">
+			#{accessNums},
+		  </if>
+		  <if test="objects != null">
+			#{objects},
+		  </if>
+		  <if test="createdTime != null">
+			#{createdTime},
+		  </if>
+    </trim>
+  </insert>
+</mapper>
