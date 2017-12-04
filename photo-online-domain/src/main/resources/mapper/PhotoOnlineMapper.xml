@@ -182,8 +182,13 @@
 		select t2.id,t1.id as orderId,t2.is_approval as isApproval,t2.cover_img as coverImg,t2.banner_img as bannerImg,t2.live_name as liveName,
 		t2.access_num as accessNum,t2.forward_num as forwardNum,t2.open_auth as openAuth,access_pwd as accessPwd,
 		(select ls.`journey_name` from line_sight ls where ls.order_id=t1.id limit 1) as address,
-		ifnull((select count(*) from t_shoot_group tsg inner join t_group_photo tgp on tsg.id = tgp.group_id
-		where tsg.order_no = t1.order_no and tgp.yn = 1 and tgp.is_delete = 1 group by tsg.order_no),0) as photoNum,
+		(CASE
+			WHEN t2.is_approval = 1 THEN (select count(*) from t_shoot_group tsg inner join t_group_photo tgp on tsg.id = tgp.group_id
+					where tsg.order_no = t1.order_no and tgp.yn = 1 and tgp.is_delete = 1 and tgp.update_url is not NULL)
+			ELSE (select count(*) from t_shoot_group tsg inner join t_group_photo tgp on tsg.id = tgp.group_id
+					where tsg.order_no = t1.order_no and tgp.yn = 1 and tgp.is_delete = 1)
+			END
+		)AS photoNum,
 		(case when open_time = 2 then concat(date_format(t2.start_time,'%Y-%m-%d'),'~',date_format(t2.end_time,'%Y-%m-%d'))
 		when t3.shoot_time is null then date_format(t1.start_time,'%Y-%m-%d') else date_format(t3.shoot_time,'%Y-%m-%d') end) as startTime
 		from t_order t1 inner join t_photo_online t2 on t1.id = t2.order_id
