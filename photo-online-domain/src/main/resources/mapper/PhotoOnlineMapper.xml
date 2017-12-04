@@ -189,7 +189,9 @@
 		from t_order t1 inner join t_photo_online t2 on t1.id = t2.order_id
 		left join (select `journey_name`,shoot_time,order_id from line_sight limit 1) t3 on t3.order_id = t1.id
 		where t1.is_photo_online = 1 and t2.yn = 1
-		and t1.status &lt;&gt;3 and ((t2.open_time = 2 and end_time > now()) or open_time = 1)
+		and t1.status &lt;&gt;3 and ( (t2.open_time = 2
+		AND DATE_FORMAT(t2.start_time,'%Y-%m-%d') &lt;= DATE_FORMAT(now(),'%Y-%m-%d')
+		AND DATE_FORMAT(t2.end_time,'%Y-%m-%d') &gt;= DATE_FORMAT(now(),'%Y-%m-%d')) or open_time = 1)
 		<if test="liveTypeId != null and liveTypeId != '' ">
 			and t2.live_type_id = #{liveTypeId}
 		</if>
