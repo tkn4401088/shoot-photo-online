@@ -41,8 +41,14 @@
 
 	<select id="selectById" resultMap="PhotoOnlineResultMap" parameterType="java.lang.Long" >
 		select
-		ifnull((select count(*) from t_shoot_group tsg inner join t_group_photo tgp on tsg.id = tgp.group_id
-		where tsg.order_no = t1.order_no and tgp.yn = 1 and tgp.is_delete = 1 group by tsg.order_no),0) as photoNum,t1.order_no as orderNo,
+		(CASE
+			WHEN t.is_approval = 1 THEN (select count(*) from t_shoot_group tsg inner join t_group_photo tgp on tsg.id = tgp.group_id
+				where tsg.order_no = t1.order_no and tgp.yn = 1 and tgp.is_delete = 1 and tgp.update_url is not NULL)
+			ELSE (select count(*) from t_shoot_group tsg inner join t_group_photo tgp on tsg.id = tgp.group_id
+				where tsg.order_no = t1.order_no and tgp.yn = 1 and tgp.is_delete = 1)
+		  END
+		)AS photoNum,
+		t1.order_no as orderNo,
 		(select ls.`journey_name` from line_sight ls where ls.order_id=t1.oid limit 1) as address,
 		<include refid="photoOnlineConf_columns" />
 		from t_photo_online t inner join (select id as oid ,order_no from t_order)t1 on t1.oid = t.order_id
