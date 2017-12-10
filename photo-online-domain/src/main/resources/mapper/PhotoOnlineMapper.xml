@@ -206,6 +206,7 @@
 		<if test="liveTypeId != null and liveTypeId != '' ">
 			and t2.live_type_id = #{liveTypeId}
 		</if>
+		order by t2.created_time DESC 
 	</select>
 
 	<!-- 更新照片直播访问数 -->
