@@ -39,6 +39,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -198,6 +199,37 @@ public class PhotoOnlineController {
                 susResp.setData(BeanUtil.getListProperties(retPhotoOnline,
                         new String[]{"isApproval","id","orderId","curPage","pageCount","rowsCount","liveName", "coverImg","photoNum","accessNum","forwardNum",
                                 "bannerImg","startTime", "openAuth","accessPwd","introduce","address"},
+                        false));
+            }
+        }catch (ParamsCheckFailException e){
+            log.error(ExceptionPrintUtil.getMessage(e));
+            e.printStackTrace();
+            susResp = new ResponseModel(e.getCode(), e.getMsg());
+        }catch (Exception e){
+            susResp = ResponseModel.getFailedResponseModel().setData(e.getMessage());
+            log.error(ExceptionPrintUtil.getMessage(e));
+            e.printStackTrace();
+        }
+        return susResp;
+    }
+    /**
+     * 根据直播间ID查询行程信息
+     * @param photoOnline
+     * @return
+     */
+    @RequestMapping(value = "/selectLineSightById", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public Object selectLineSightById(@RequestBody PhotoOnline photoOnline){
+        ResponseModel susResp = ResponseModel.getSuccessResponseModel();
+        try {
+            //校验参数
+            if(photoOnline == null || photoOnline.getId() ==null || photoOnline.getId() == 0){
+                throw new ParamsCheckFailException("直播间id不能为空");
+
+            }
+            PhotoOnline result = photoOnlineService.selectLineSightById(photoOnline.getId());
+            if(null != result) {
+                susResp.setData(BeanUtil.getProperties(result,
+                        new String[]{"tripid", "journeyName","journeyDay","periodType"},
                         false));
             }
         }catch (ParamsCheckFailException e){

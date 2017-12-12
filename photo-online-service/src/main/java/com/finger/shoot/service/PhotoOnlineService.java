@@ -8,6 +8,7 @@ package com.finger.shoot.service;
 
 import com.finger.shoot.entity.PhotoOnline;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -27,7 +28,7 @@ public interface PhotoOnlineService {
 	String savePhotoOnline(PhotoOnline photoOnline);
 	/**
 	 * 根据订单ID来更改直播团状态
-	 * @param orderId
+	 * @param photoOnline
 	 * @return
 	 */
 	String changeStatusByOrderId(PhotoOnline photoOnline);
@@ -45,6 +46,7 @@ public interface PhotoOnlineService {
 	 */
 	PhotoOnline selectById(Long id);
 
+	PhotoOnline selectLineSightById(Long id);
 
 	/**
 	 * 查询所有直播团

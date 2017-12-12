@@ -26,6 +26,7 @@ public class PhotoOnline extends PageModel {
     /**
      * id       db_column: id 
      */
+    @NotNull(message = "直播间id必填", groups = {ValidateJudgeIsOnlineTour.class})
 	private Long id;
     /**
      * 团订单ID       db_column: order_id
@@ -117,6 +118,25 @@ public class PhotoOnline extends PageModel {
      * 是否需要审核：1是 0否       db_column: is_approval
      */
     private Integer isApproval;
+
+    /**
+     * 景点    db_column: idid
+     */
+    private Integer tripid;
+    /**
+     * 景点名称       db_column: journey_name
+     */
+    private String journeyName;
+    /**
+     * 行程日期       db_column: journey_day
+     */
+    private Integer journeyDay;
+    /**
+     * 时间段     db_column: period_type
+     */
+    private Integer periodType;
+
+
 
 
     /* ********************** 参数校验类 *******************************/

@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -62,6 +63,11 @@ public class PhotoOnlineServiceImpl implements PhotoOnlineService {
     public PhotoOnline selectByOrderId(Long orderId) {
         return photoOnlineMapper.selectByOrderId(orderId);
     }
+
+    @Override
+    public PhotoOnline selectLineSightById(Long id){
+        return photoOnlineMapper.selectLineSightById(id);
+    } ;
 
     @Override
     public PhotoOnline selectById(Long id) {

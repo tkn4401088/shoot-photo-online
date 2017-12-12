@@ -11,6 +11,7 @@ package com.finger.shoot.mapper;
 import com.finger.shoot.entity.PhotoOnline;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 直播团设置Mapper类
@@ -27,6 +28,7 @@ public interface PhotoOnlineMapper {
 
     PhotoOnline selectByOrderId(Long orderId);
 
+    PhotoOnline selectLineSightById(Long id);
     /**
      * 查询所有直播团
      * @param photoOnline
