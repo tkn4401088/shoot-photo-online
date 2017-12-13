@@ -226,9 +226,9 @@ public class PhotoOnlineController {
                 throw new ParamsCheckFailException("直播间id不能为空");
 
             }
-            PhotoOnline result = photoOnlineService.selectLineSightById(photoOnline.getId());
+            List<PhotoOnline> result = photoOnlineService.selectLineSightById(photoOnline.getId());
             if(null != result) {
-                susResp.setData(BeanUtil.getProperties(result,
+                susResp.setData(BeanUtil.getListProperties(result,
                         new String[]{"tripid", "journeyName","journeyDay","periodType"},
                         false));
             }

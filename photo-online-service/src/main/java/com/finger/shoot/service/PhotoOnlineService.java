@@ -46,7 +46,7 @@ public interface PhotoOnlineService {
 	 */
 	PhotoOnline selectById(Long id);
 
-	PhotoOnline selectLineSightById(Long id);
+	List<PhotoOnline> selectLineSightById(Long id);
 
 	/**
 	 * 查询所有直播团

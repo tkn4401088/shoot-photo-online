@@ -65,7 +65,7 @@ public class PhotoOnlineServiceImpl implements PhotoOnlineService {
     }
 
     @Override
-    public PhotoOnline selectLineSightById(Long id){
+    public List<PhotoOnline> selectLineSightById(Long id){
         return photoOnlineMapper.selectLineSightById(id);
     } ;
 

@@ -28,7 +28,7 @@ public interface PhotoOnlineMapper {
 
     PhotoOnline selectByOrderId(Long orderId);
 
-    PhotoOnline selectLineSightById(Long id);
+    List<PhotoOnline> selectLineSightById(Long id);
     /**
      * 查询所有直播团
      * @param photoOnline
