@@ -22,6 +22,7 @@
       <result column="created_time" property="createdTime"/>
       <result column="updated_time" property="updatedTime"/>
 	  <result column="is_approval" property="isApproval"/>
+	  <result column="is_photo_water" property="isPhotoWater"/>
 	  <result column="tripid" property="tripid"/>
 	  <result column="journeyName" property="journeyName"/>
 	  <result column="journeyDay" property="journeyDay"/>
@@ -30,7 +31,7 @@
 
   <sql id="photoOnlineConf_columns">
       id,live_type_id,live_type_name,live_name,order_id,cover_img,banner_img,open_time,start_time,end_time,open_auth,access_pwd,introduce,
-      forward_num,access_num,created_time,updated_time,is_approval
+      forward_num,access_num,created_time,updated_time,is_approval,is_photo_water
   </sql>
 
   <!-- 根据订单ID查询直播团配置 -->
@@ -149,6 +150,9 @@
 		<if test="isApproval != null">
 			is_approval,
 		</if>
+		<if test="isPhotoWater != null">
+			is_photo_water,
+		</if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
 		  <if test="id != null">
@@ -199,6 +203,9 @@
 			<if test="isApproval != null">
 				#{isApproval},
 			</if>
+		<if test="isPhotoWater != null">
+			#{isPhotoWater},
+		</if>
     </trim>
   </insert>
 

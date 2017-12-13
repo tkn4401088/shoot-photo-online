@@ -118,7 +118,10 @@ public class PhotoOnline extends PageModel {
      * 是否需要审核：1是 0否       db_column: is_approval
      */
     private Integer isApproval;
-
+    /**
+     * 是否需要审核：1是 0否       db_column: is_photo_water
+     */
+    private Integer isPhotoWater;
     /**
      * 景点    db_column: idid
      */
