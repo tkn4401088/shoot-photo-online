@@ -54,7 +54,7 @@ public class GroupPhotoController {
             susResp.setData(groupPhotos);
 
             susResp.setData(BeanUtil.getListProperties(groupPhotos,
-                    new String[]{"id","createTime","thumbnailUrl","photographer"},
+                    new String[]{"id","tripId","createTime","thumbnailUrl","photographer"},
                     false));
         }catch (ParamsCheckFailException e){
             log.error(ExceptionPrintUtil.getMessage(e));
